@@ -6,6 +6,11 @@ const client = new QdrantClient({
 
 export const collectionName = process.env.QDRANT_COLLECTION_NAME || 'coding_knowledge';
 
+/**
+ * Ensures that the Qdrant collection exists, creating it if necessary.
+ * @exception Throws an error if there is an issue communicating with 
+ * Qdrant or creating the collection.
+ */
 export async function ensureCollection() {
   try {
     const collections = await client.getCollections();
@@ -46,6 +51,14 @@ export async function searchSimilarDocuments(
   }
 }
 
+/**
+ * Adds a document to the Qdrant collection.
+ * @param id : Unique identifier for the document.
+ * @param embedding : The vector embedding of the document.
+ * @param payload : Additional metadata to store with the document.
+ * @exception Throws an error if there is an issue communicating with 
+ * Qdrant or adding the document.
+ */
 export async function addDocument(
   id: string,
   embedding: number[],

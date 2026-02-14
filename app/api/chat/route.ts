@@ -1,24 +1,38 @@
 import { NextRequest } from 'next/server';
+import fs from 'fs';
+import path from 'path';
 import OpenAI from 'openai';
 import { searchSimilarDocuments } from '@/lib/qdrant';
 
+// Initialize OpenAI client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Tool definition for retrieving code information
+// Load system prompt
+const systemPromptPath = path.join(process.cwd(), 'system_prompt.md');
+const systemPrompt =
+  fs.existsSync(systemPromptPath) && fs.statSync(systemPromptPath).isFile()
+    ? fs.readFileSync(systemPromptPath, 'utf8')
+    : 'You are a helpful coding assistant.';
+
+// Tool definition for retrieving code information from RAG database
 const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   {
     type: 'function',
     function: {
+      // LLM will identify this function by name when calling this tool
       name: 'search_code_knowledge',
-      description: 'Search the company\'s code knowledge base for relevant information about code, functions, classes, or implementation details.',
+      // Description for the LLM to understand when to use this tool
+      description: 'Search the company\'s code knowledge base (RAG over Qdrant) for relevant information about code, functions, classes, or implementation details.',
+      // Define the parameters that the LLM needs to provide when calling this tool
       parameters: {
         type: 'object',
         properties: {
           query: {
             type: 'string',
-            description: 'The search query to find relevant code information',
+            // Description for the LLM to understand what 'query' parameter is for
+            description: 'Short natural language search query for semantic vector search (not SQL) to find relevant code information',
           },
         },
         required: ['query'],
@@ -27,14 +41,19 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   },
 ];
 
+/**
+ * RAG database search. We search for similar documents in Qdrant. 
+ * @param query : The search query to find relevant code information
+ * @returns A JSON string containing the search results with text, score, and metadata for each relevant 
+ * document found in the code knowledge base (RAG).
+ */
 async function searchCodeKnowledge(query: string) {
   try {
     // Create embedding for the query
     const embeddingResponse = await openai.embeddings.create({
-      model: 'text-embedding-3-small',
+      model: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
       input: query,
     });
-
     const queryEmbedding = embeddingResponse.data[0].embedding;
 
     // Search similar documents in Qdrant
@@ -66,52 +85,70 @@ export async function POST(req: NextRequest) {
     }
 
     const encoder = new TextEncoder();
+    
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          // Initial chat completion with tools
+          // Prepare messages with system prompt
+          const systemMessage = {
+            role: 'system' as const,
+            content: systemPrompt,
+          };
+
+          // Send the request to the OpenAI API and wait until the streaming connection is established
           const response = await openai.chat.completions.create({
-            model: 'gpt-4-turbo-preview',
-            messages: messages,
-            tools: tools,
-            tool_choice: 'auto',
-            stream: true,
+            model: process.env.OPENAI_CHAT_MODEL || 'gpt-4-turbo',
+            messages: [systemMessage, ...messages], // system and user messages to send to the OpenAI API
+            tools: tools, // Tools to use
+            tool_choice: 'auto', // Auto-select the tool to use
+            stream: true, // Stream the response
+            n: 1, // Only one response is needed
           });
 
           let functionName = '';
           let functionArgs = '';
           let currentMessage = '';
 
+          // Stream the response from the OpenAI API (async iterator)
           for await (const chunk of response) {
+            // we requested only one choice (version of the response)
+            // delta is next LLM's response can be content or tool_calls etc.
             const delta = chunk.choices[0]?.delta;
 
-            // Handle tool calls
+
+            // Handle tool calls (if the LLM is calling a tool)
             if (delta?.tool_calls) {
-              const toolCall = delta.tool_calls[0];
+              const toolCall = delta.tool_calls[0]; // Get the tool call from the delta
               if (toolCall?.function?.name) {
                 functionName = toolCall.function.name;
               }
               if (toolCall?.function?.arguments) {
+                // argument comes in more than one chunks (length issue), so we need to concatenate them
                 functionArgs += toolCall.function.arguments;
               }
             }
+            // finally we will have the tool name and its arguments. it comes in more then one chunk.
 
-            // Handle content
+            // Handle content (if the LLM is responding with content)
             if (delta?.content) {
               currentMessage += delta.content;
+              // Send the data to the client (SSE format)
               const data = `data: ${JSON.stringify({ content: delta.content })}\n\n`;
+              // Send the data to the client
               controller.enqueue(encoder.encode(data));
             }
 
-            // Check if tool call is finished
+            // Check if LLM finished sending the tool call response (so we can call the tool)
             if (chunk.choices[0]?.finish_reason === 'tool_calls' && functionName) {
               // Execute tool
               let toolResult = '';
               if (functionName === 'search_code_knowledge') {
                 const args = JSON.parse(functionArgs);
+                // calling the tool (database search)
                 toolResult = await searchCodeKnowledge(args.query);
                 
-                // Send tool execution notification
+                // Send tool execution notification to the client
+                // it no needed for a real user experience, but it's good to have it for debugging
                 const toolData = `data: ${JSON.stringify({ 
                   tool: functionName, 
                   query: args.query 
@@ -119,8 +156,9 @@ export async function POST(req: NextRequest) {
                 controller.enqueue(encoder.encode(toolData));
               }
 
-              // Create new messages with tool result
-              const newMessages = [
+              // Create new messages with system prompt and tool result
+              const tool_call_Messages = [
+                systemMessage,
                 ...messages,
                 {
                   role: 'assistant',
@@ -143,8 +181,8 @@ export async function POST(req: NextRequest) {
 
               // Get final response
               const finalResponse = await openai.chat.completions.create({
-                model: 'gpt-4-turbo-preview',
-                messages: newMessages,
+                model: process.env.OPENAI_CHAT_MODEL || 'gpt-4-turbo',
+                messages: tool_call_Messages,
                 stream: true,
               });
 

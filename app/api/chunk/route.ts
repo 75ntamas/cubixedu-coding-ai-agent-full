@@ -3,6 +3,7 @@ import OpenAI from 'openai';
 import { addDocument, ensureCollection } from '@/lib/qdrant';
 import { v4 as uuidv4 } from 'uuid';
 
+// Initialize OpenAI client with API key
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -23,10 +24,9 @@ export async function POST(req: NextRequest) {
 
     // Create embedding
     const embeddingResponse = await openai.embeddings.create({
-      model: 'text-embedding-3-small',
+      model: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
       input: text,
     });
-
     const embedding = embeddingResponse.data[0].embedding;
 
     // Generate unique ID
@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
       timestamp: new Date().toISOString(),
     });
 
+    // Response
     return NextResponse.json({
       success: true,
       id,

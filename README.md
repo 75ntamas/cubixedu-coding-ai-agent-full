@@ -27,16 +27,7 @@ npm install
 
 2. Set up environment variables:
 
-Create a `.env` file in the root directory:
-
-```env
-# OpenAI Configuration
-OPENAI_API_KEY=your_openai_api_key_here
-
-# Qdrant Configuration
-QDRANT_URL=http://localhost:6333
-QDRANT_COLLECTION_NAME=coding_knowledge
-```
+Create a `.env` file in the root directory and actualize it.
 
 3. Start Qdrant (if running locally):
 
@@ -44,8 +35,6 @@ Using Docker:
 ```bash
 docker run -p 6333:6333 qdrant/qdrant
 ```
-
-Or download from: https://qdrant.tech/documentation/quick-start/
 
 ## Usage
 
