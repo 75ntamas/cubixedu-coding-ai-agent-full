@@ -1,0 +1,8 @@
+# Requirements for C# File Chunker (chunk_cs_files.py)
+# Python 3.6+ required
+
+# HTTP requests library for API communication
+requests>=2.31.0
+
+# Optional: For better debugging and development
+# ipython>=8.12.0
