@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import OpenAI from 'openai';
 import { searchSimilarDocuments } from '@/lib/qdrant';
+import { rerankWithLLM, SearchResult } from '@/lib/reranker';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -42,27 +43,42 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
 ];
 
 /**
- * RAG database search. We search for similar documents in Qdrant. 
+ * RAG database search with retrieval and reranking mechanism.
+ *
+ * Pipeline:
+ * 1. Retrieval: Vector search in Qdrant to get top 20 candidates
+ * 2. Reranking: Use LLM to evaluate and rerank results for better relevance
+ *
  * @param query : The search query to find relevant code information
- * @returns A JSON string containing the search results with text, score, and metadata for each relevant 
- * document found in the code knowledge base (RAG).
+ * @returns A JSON string containing the reranked search results with text, score, and metadata
  */
 async function searchCodeKnowledge(query: string) {
   try {
-    // Create embedding for the query
+    // Step 1: RETRIEVAL - Create embedding for the query
     const embeddingResponse = await openai.embeddings.create({
       model: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
       input: query,
     });
     const queryEmbedding = embeddingResponse.data[0].embedding;
 
-    // Search similar documents in Qdrant
-    const results = await searchSimilarDocuments(queryEmbedding, 3);
+    // Step 2: RETRIEVAL - Search similar documents in Qdrant (get top 20 candidates)
+    const retrievalResults = await searchSimilarDocuments(queryEmbedding, 20);
 
-    // Format results
-    const formattedResults = results.map((result: any) => ({
+    // Step 3: RERANKING - Use LLM to rerank results for better relevance
+    // This evaluates the actual content relevance beyond just vector similarity
+    const rerankedResults = await rerankWithLLM(
+      query,
+      retrievalResults as SearchResult[],
+      openai,
+      8
+    );
+
+    // Step 4: Format results for LLM consumption
+    const formattedResults = rerankedResults.map((result: any) => ({
       text: result.payload?.text || '',
-      score: result.score,
+      score: result.finalScore || result.score, // Use reranked score if available
+      llmScore: result.llmScore, // Include LLM score for debugging
+      vectorScore: result.score, // Include original vector score for comparison
       metadata: result.payload,
     }));
 
