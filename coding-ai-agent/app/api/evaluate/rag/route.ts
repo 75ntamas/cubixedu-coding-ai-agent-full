@@ -112,13 +112,37 @@ export async function POST(req: NextRequest) {
 
 /**
  * GET /api/evaluate/rag
- * Get latest evaluation results
+ * Get all evaluation results (sorted by timestamp, newest first)
  */
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await ensureResultsDir();
 
-    // Check if results file exists
+    // Check if this is a request for all history
+    const url = new URL(req.url);
+    const history = url.searchParams.get('history') === 'true';
+
+    if (history) {
+      // Get all evaluation files
+      const files = await fs.readdir(RESULTS_DIR);
+      const evaluationFiles = files.filter(f => f.startsWith('evaluation-') && f.endsWith('.json'));
+      
+      // Read and parse all files
+      const allResults = await Promise.all(
+        evaluationFiles.map(async (file) => {
+          const filePath = path.join(RESULTS_DIR, file);
+          const data = await fs.readFile(filePath, 'utf-8');
+          return JSON.parse(data);
+        })
+      );
+
+      // Sort by timestamp (newest first)
+      allResults.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+      return NextResponse.json(allResults);
+    }
+
+    // Default: return latest results
     try {
       const data = await fs.readFile(LATEST_RESULTS_FILE, 'utf-8');
       const results = JSON.parse(data);

@@ -6,16 +6,19 @@ import { RAG_EVAL_CONFIG } from '@/evaluation/rag/config';
 
 export default function DashboardPage() {
   const [results, setResults] = useState<EvaluationResults | null>(null);
+  const [allResults, setAllResults] = useState<EvaluationResults[]>([]);
   const [loading, setLoading] = useState(false);
   const [evaluating, setEvaluating] = useState(false);
   const [progress, setProgress] = useState(0);
   const [progressMessage, setProgressMessage] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [showIndividualResults, setShowIndividualResults] = useState(false);
+  const [expandedResults, setExpandedResults] = useState<Set<string>>(new Set());
 
   // Load existing results on mount
   useEffect(() => {
     loadResults();
+    loadAllResults();
   }, []);
 
   const loadResults = async () => {
@@ -35,6 +38,30 @@ export default function DashboardPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const loadAllResults = async () => {
+    try {
+      const response = await fetch('/api/evaluate/rag?history=true');
+      if (response.ok) {
+        const data = await response.json();
+        setAllResults(data);
+      }
+    } catch (err: any) {
+      console.error('Failed to load history:', err);
+    }
+  };
+
+  const toggleResultExpanded = (timestamp: string) => {
+    setExpandedResults(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(timestamp)) {
+        newSet.delete(timestamp);
+      } else {
+        newSet.add(timestamp);
+      }
+      return newSet;
+    });
   };
 
   const runEvaluation = async () => {
@@ -84,6 +111,8 @@ export default function DashboardPage() {
                 setResults(data.results);
                 setProgress(100);
                 setProgressMessage('Evaluation complete!');
+                // Reload all results to include the new one
+                loadAllResults();
               } else if (data.type === 'error') {
                 setError(data.message);
               }
@@ -229,14 +258,14 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Individual Results - Collapsible */}
+              {/* Individual Results History - Collapsible */}
               <div className="bg-gray-800 rounded-lg">
                 <button
                   onClick={() => setShowIndividualResults(!showIndividualResults)}
                   className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-750 transition-colors rounded-lg"
                 >
                   <h2 className="text-2xl font-bold text-white">
-                    Individual Test Results
+                    Evaluation History ({allResults.length} runs)
                   </h2>
                   <svg
                     className={`w-6 h-6 text-gray-400 transition-transform ${
@@ -255,60 +284,104 @@ export default function DashboardPage() {
                   </svg>
                 </button>
                 {showIndividualResults && (
-                  <div className="px-6 pb-6 overflow-x-auto">
-                  <table className="w-full text-left text-sm text-gray-300">
-                    <thead className="bg-gray-900 text-gray-400 uppercase text-xs">
-                      <tr>
-                        <th className="px-4 py-3">Test ID</th>
-                        <th className="px-4 py-3">Query</th>
-                        <th className="px-4 py-3">Difficulty</th>
-                        <th className="px-4 py-3">Precision</th>
-                        <th className="px-4 py-3">Recall</th>
-                        <th className="px-4 py-3">MRR</th>
-                        <th className="px-4 py-3">Hits</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {results.individualResults.map((result) => (
-                        <tr
-                          key={result.testId}
-                          className="border-b border-gray-700 hover:bg-gray-750"
-                        >
-                          <td className="px-4 py-3 font-medium">
-                            {result.testId}
-                          </td>
-                          <td className="px-4 py-3 max-w-md truncate">
-                            {result.query}
-                          </td>
-                          <td className="px-4 py-3">
-                            <span
-                              className={`px-2 py-1 rounded text-xs font-medium ${
-                                result.difficulty === 'easy'
-                                  ? 'bg-green-900 text-green-200'
-                                  : result.difficulty === 'medium'
-                                  ? 'bg-yellow-900 text-yellow-200'
-                                  : 'bg-red-900 text-red-200'
+                  <div className="px-6 pb-6 space-y-4">
+                    {allResults.map((evalResult) => {
+                      const isExpanded = expandedResults.has(evalResult.timestamp);
+                      const date = new Date(evalResult.timestamp);
+                      const dateStr = date.toLocaleString();
+                      
+                      return (
+                        <div key={evalResult.timestamp} className="bg-gray-900 rounded-lg">
+                          <button
+                            onClick={() => toggleResultExpanded(evalResult.timestamp)}
+                            className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-850 transition-colors rounded-lg"
+                          >
+                            <div>
+                              <h3 className="text-lg font-semibold text-white">
+                                {dateStr}
+                              </h3>
+                              <p className="text-sm text-gray-400">
+                                K={evalResult.config.k} | Tests: {evalResult.totalTests} |
+                                Avg Precision: {formatPercent(evalResult.aggregatedMetrics.avgPrecision)} |
+                                Avg Recall: {formatPercent(evalResult.aggregatedMetrics.avgRecall)}
+                              </p>
+                            </div>
+                            <svg
+                              className={`w-5 h-5 text-gray-400 transition-transform ${
+                                isExpanded ? 'transform rotate-180' : ''
                               }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
                             >
-                              {result.difficulty}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3">
-                            {formatPercent(result.metrics.precision)}
-                          </td>
-                          <td className="px-4 py-3">
-                            {formatPercent(result.metrics.recall)}
-                          </td>
-                          <td className="px-4 py-3">
-                            {formatDecimal(result.metrics.mrr)}
-                          </td>
-                          <td className="px-4 py-3">
-                            {result.hitsCount}/{result.relevantCount || result.retrievedCount}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          </button>
+                          {isExpanded && (
+                            <div className="px-4 pb-4 overflow-x-auto">
+                              <table className="w-full text-left text-sm text-gray-300">
+                                <thead className="bg-gray-800 text-gray-400 uppercase text-xs">
+                                  <tr>
+                                    <th className="px-4 py-3">Test ID</th>
+                                    <th className="px-4 py-3">Query</th>
+                                    <th className="px-4 py-3">Difficulty</th>
+                                    <th className="px-4 py-3">Precision</th>
+                                    <th className="px-4 py-3">Recall</th>
+                                    <th className="px-4 py-3">MRR</th>
+                                    <th className="px-4 py-3">Hits</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {evalResult.individualResults.map((result) => (
+                                    <tr
+                                      key={result.testId}
+                                      className="border-b border-gray-800 hover:bg-gray-850"
+                                    >
+                                      <td className="px-4 py-3 font-medium">
+                                        {result.testId}
+                                      </td>
+                                      <td className="px-4 py-3 max-w-md truncate">
+                                        {result.query}
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        <span
+                                          className={`px-2 py-1 rounded text-xs font-medium ${
+                                            result.difficulty === 'easy'
+                                              ? 'bg-green-900 text-green-200'
+                                              : result.difficulty === 'medium'
+                                              ? 'bg-yellow-900 text-yellow-200'
+                                              : 'bg-red-900 text-red-200'
+                                          }`}
+                                        >
+                                          {result.difficulty}
+                                        </span>
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        {formatPercent(result.metrics.precision)}
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        {formatPercent(result.metrics.recall)}
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        {formatDecimal(result.metrics.mrr)}
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        {result.hitsCount}/{result.relevantCount || result.retrievedCount}
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
