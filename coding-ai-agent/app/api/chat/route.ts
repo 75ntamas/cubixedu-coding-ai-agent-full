@@ -103,6 +103,7 @@ export async function POST(req: NextRequest) {
             tool_choice: 'auto', // Auto-select the tool to use
             stream: true, // Stream the response
             n: 1, // Only one response is needed
+            temperature: 0.3 // Adjust temperature for more focused responses (optional)
           });
 
           let functionName = '';
