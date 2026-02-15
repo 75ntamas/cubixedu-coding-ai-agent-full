@@ -10,7 +10,7 @@ const openai = new OpenAI({
 });
 
 // Load system prompt
-const systemPromptPath = path.join(process.cwd(), 'system_prompt.md');
+const systemPromptPath = path.join(process.cwd(), 'system-prompt.md');
 const systemPrompt =
   fs.existsSync(systemPromptPath) && fs.statSync(systemPromptPath).isFile()
     ? fs.readFileSync(systemPromptPath, 'utf8')

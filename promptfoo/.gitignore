@@ -1,0 +1,14 @@
+# Environment variables
+.env
+
+# Promptfoo cache and results
+.promptfoo/
+results.json
+output/
+
+# Node modules (if installing locally)
+node_modules/
+package-lock.json
+
+# Test artifacts
+*.log
