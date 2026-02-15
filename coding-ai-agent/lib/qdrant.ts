@@ -33,9 +33,18 @@ export async function ensureCollection() {
   }
 }
 
+/**
+ * Search for similar documents in Qdrant using vector similarity.
+ * @param embedding - The query vector embedding
+ * @param limit - Maximum number of results to return
+ * @param minScore - Minimum similarity score threshold (0-1). Results below this score are filtered out.
+ *                   Default: 0 (no filtering)
+ * @returns Filtered search results with score >= minScore
+ */
 export async function searchSimilarDocuments(
   embedding: number[],
-  limit: number = 5
+  limit: number = 5,
+  minScore: number = 0
 ) {
   try {
     const searchResult = await client.search(collectionName, {
@@ -43,6 +52,11 @@ export async function searchSimilarDocuments(
       limit,
       with_payload: true,
     });
+
+    // Filter results by minimum score threshold
+    if (minScore > 0) {
+      return searchResult.filter(result => (result.score || 0) >= minScore);
+    }
 
     return searchResult;
   } catch (error) {

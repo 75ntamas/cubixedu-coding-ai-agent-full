@@ -62,7 +62,8 @@ async function searchCodeKnowledge(query: string) {
     const queryEmbedding = embeddingResponse.data[0].embedding;
 
     // Step 2: RETRIEVAL - Search similar documents in Qdrant (get top 20 candidates)
-    const retrievalResults = await searchSimilarDocuments(queryEmbedding, 20);
+    // Filter by minScore=0.5 to reduce noise and decrease LLM cost before reranking
+    const retrievalResults = await searchSimilarDocuments(queryEmbedding, 20, 0.5);
 
     // Step 3: RERANKING - Use LLM to rerank results for better relevance
     // This evaluates the actual content relevance beyond just vector similarity

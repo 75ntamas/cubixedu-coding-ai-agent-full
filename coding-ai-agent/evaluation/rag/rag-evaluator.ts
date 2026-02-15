@@ -190,8 +190,12 @@ export class RAGEvaluator {
     });
     const queryEmbedding = embeddingResponse.data[0].embedding;
 
-    // 2. Retrieval
-    const retrievalResults = await searchSimilarDocuments(queryEmbedding, k);
+    // 2. Retrieval with similarity score filtering
+    const retrievalResults = await searchSimilarDocuments(
+      queryEmbedding,
+      k,
+      RAG_EVAL_CONFIG.MIN_SIMILARITY_SCORE
+    );
 
     // 3. Extract identifiers and check matches
     const retrievedIds: string[] = [];

@@ -15,6 +15,7 @@ async function debugEvaluateDataset() {
   console.log('Configuration:');
   console.log(`   K: ${RAG_EVAL_CONFIG.K}`);
   console.log(`   Rate Limit Delay: ${RAG_EVAL_CONFIG.RATE_LIMIT_DELAY_MS}ms`);
+  console.log(`   Similarity Threshold: ${RAG_EVAL_CONFIG.MIN_SIMILARITY_SCORE}`);
   console.log(`   Total Test Cases: ${testDataset.length}\n`);
 
   // Create evaluator instance
