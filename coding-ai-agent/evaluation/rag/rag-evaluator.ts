@@ -5,7 +5,7 @@
 
 import OpenAI from 'openai';
 import { searchSimilarDocuments } from '@/lib/qdrant';
-import { TestCase } from './test-dataset';
+import { TestCase, RelevantChunk } from './test-dataset';
 import { RAG_EVAL_CONFIG } from './config';
 
 export interface EvaluationMetrics {
@@ -60,6 +60,35 @@ export class RAGEvaluator {
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
+  }
+
+  /**
+   * Check if a retrieved chunk matches a relevant chunk based on metadata
+   */
+  private chunkMatches(retrieved: any, relevant: RelevantChunk): boolean {
+    const retrievedFilename = retrieved.payload?.filename || '';
+    const retrievedClassName = retrieved.payload?.class_name || '';
+    const retrievedMethodName = retrieved.payload?.method_name || '';
+    
+    return (
+      retrievedFilename === relevant.filename &&
+      retrievedClassName === relevant.class_name &&
+      retrievedMethodName === (relevant.method_name || '')
+    );
+  }
+
+  /**
+   * Create a readable identifier for a chunk based on metadata
+   */
+  private getChunkIdentifier(chunk: any): string {
+    const filename = chunk.payload?.filename || 'unknown';
+    const className = chunk.payload?.class_name || 'unknown';
+    const methodName = chunk.payload?.method_name || '';
+    
+    if (methodName) {
+      return `${filename}::${className}.${methodName}`;
+    }
+    return `${filename}::${className}`;
   }
 
   /**
@@ -152,7 +181,7 @@ export class RAGEvaluator {
     k: number = RAG_EVAL_CONFIG.K
   ): Promise<TestResult> {
     // If no relevant chunks specified, use lenient evaluation (all results considered correct)
-    const isLenient = testCase.relevantChunkIds.length === 0;
+    const isLenient = testCase.relevantChunks.length === 0;
 
     // 1. Generate embedding
     const embeddingResponse = await this.openai.embeddings.create({
@@ -164,23 +193,23 @@ export class RAGEvaluator {
     // 2. Retrieval
     const retrievalResults = await searchSimilarDocuments(queryEmbedding, k);
 
-    // 3. Extract IDs and previews
+    // 3. Extract identifiers and check matches
     const retrievedIds: string[] = [];
     const retrievedPreviews: string[] = [];
+    const matchedRelevantIds: string[] = [];
     
     retrievalResults.forEach(r => {
-      // Try different ID formats
-      let chunkId = String(r.id);
+      // Create readable identifier based on metadata
+      const chunkId = this.getChunkIdentifier(r);
+      retrievedIds.push(chunkId);
       
-      // If payload has identifiable info, construct a readable ID
-      if (r.payload?.filename && r.payload?.chunk_type !== undefined) {
-        chunkId = `${r.payload.filename}_${r.payload.chunk_type}`;
-        if (r.payload.chunk_index !== undefined) {
-          chunkId += `_${r.payload.chunk_index}`;
+      // Check if this retrieved chunk matches any relevant chunk
+      for (const relevantChunk of testCase.relevantChunks) {
+        if (this.chunkMatches(r, relevantChunk)) {
+          matchedRelevantIds.push(chunkId);
+          break;
         }
       }
-      
-      retrievedIds.push(chunkId);
       
       // Get text preview
       const text = r.payload?.text;
@@ -191,7 +220,13 @@ export class RAGEvaluator {
       }
     });
 
-    // 4. Calculate metrics
+    // Create expected IDs list from relevantChunks for display
+    const expectedIds = testCase.relevantChunks.map(chunk => {
+      const methodPart = chunk.method_name ? `.${chunk.method_name}` : '';
+      return `${chunk.filename}::${chunk.class_name}${methodPart}`;
+    });
+
+    // 4. Calculate metrics using matched IDs
     let precision: number;
     let recall: number;
     let mrr: number;
@@ -202,26 +237,26 @@ export class RAGEvaluator {
       recall = 1.0;
       mrr = 1.0;
     } else {
-      precision = this.calculatePrecision(retrievedIds, testCase.relevantChunkIds, k);
-      recall = this.calculateRecall(retrievedIds, testCase.relevantChunkIds, k);
-      mrr = this.calculateMRR(retrievedIds, testCase.relevantChunkIds);
+      precision = this.calculatePrecision(retrievedIds, matchedRelevantIds, k);
+      recall = this.calculateRecall(retrievedIds, matchedRelevantIds, k);
+      mrr = this.calculateMRR(retrievedIds, matchedRelevantIds);
     }
     
-    const ndcg = isLenient ? 1.0 : this.calculateNDCG(retrievedIds, testCase.relevantChunkIds, k);
+    const ndcg = isLenient ? 1.0 : this.calculateNDCG(retrievedIds, matchedRelevantIds, k);
     const f1Score = this.calculateF1(precision, recall);
 
-    const hits = isLenient ? retrievedIds.length : retrievedIds.filter(id => testCase.relevantChunkIds.includes(id)).length;
+    const hits = matchedRelevantIds.length;
 
     return {
       testId: testCase.id,
       query: testCase.query,
       difficulty: testCase.difficulty,
       retrievedCount: retrievedIds.length,
-      relevantCount: testCase.relevantChunkIds.length,
+      relevantCount: testCase.relevantChunks.length,
       hitsCount: hits,
       metrics: { precision, recall, mrr, ndcg, f1Score },
       retrievedIds,
-      expectedIds: testCase.relevantChunkIds,
+      expectedIds,
       retrievedPreviews,
     };
   }
@@ -252,16 +287,21 @@ export class RAGEvaluator {
       } catch (error) {
         console.error(`Error evaluating ${testCase.id}:`, error);
         // Add failed result with zeros
+        const expectedIds = testCase.relevantChunks.map(chunk => {
+          const methodPart = chunk.method_name ? `.${chunk.method_name}` : '';
+          return `${chunk.filename}::${chunk.class_name}${methodPart}`;
+        });
+        
         results.push({
           testId: testCase.id,
           query: testCase.query,
           difficulty: testCase.difficulty,
           retrievedCount: 0,
-          relevantCount: testCase.relevantChunkIds.length,
+          relevantCount: testCase.relevantChunks.length,
           hitsCount: 0,
           metrics: { precision: 0, recall: 0, mrr: 0, ndcg: 0, f1Score: 0 },
           retrievedIds: [],
-          expectedIds: testCase.relevantChunkIds,
+          expectedIds,
         });
       }
     }

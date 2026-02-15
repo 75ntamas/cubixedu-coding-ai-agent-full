@@ -33,9 +33,14 @@ def extract_chunks(filepath: str) -> Tuple[str, str, List[Dict]]:
     
     chunks = []
     
-    # Try to extract class name
-    class_match = re.search(r'class\s+(\w+)', content)
-    class_name = class_match.group(1) if class_match else "UnknownClass"
+    # Try to extract class name - look for actual class declaration, not comments
+    # Match: [access modifier] [class modifier] class ClassName
+    class_match = re.search(
+        r'^\s*(public|internal|private|protected)?\s*(static|abstract|sealed|partial)?\s*class\s+(\w+)',
+        content,
+        re.MULTILINE
+    )
+    class_name = class_match.group(3) if class_match else "UnknownClass"
     
     # Split content into lines for processing
     lines = content.split('\n')
@@ -96,11 +101,19 @@ def extract_chunks(filepath: str) -> Tuple[str, str, List[Dict]]:
                             brace_count -= line_content.count('}')
                             i += 1
                         
+                        # Extract method name from signature
+                        # Get first few lines of method signature
+                        method_signature = ' '.join([l.strip() for l in method_lines[:3]])
+                        # Find the identifier immediately before the opening parenthesis
+                        method_name_match = re.search(r'\b(\w+)\s*\(', method_signature)
+                        method_name = method_name_match.group(1) if method_name_match else "UnknownMethod"
+                        
                         # Create a chunk with XML doc + method
                         chunk_text = '\n'.join(xml_doc_lines + method_lines)
                         chunks.append({
                             'text': chunk_text,
-                            'chunk_type': 'method'
+                            'chunk_type': 'method',
+                            'method_name': method_name
                         })
                         continue
                     else:
@@ -191,6 +204,10 @@ def main():
                     'chunk_type': chunk['chunk_type'],
                     'chunk_index': idx
                 }
+                
+                # Add method name to metadata if it's a method chunk
+                if chunk['chunk_type'] == 'method' and 'method_name' in chunk:
+                    metadata['method_name'] = chunk['method_name']
                 
                 if args.test:
                     print(f"\n  --- Chunk {idx} ({chunk['chunk_type']}) ---")
