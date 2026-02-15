@@ -50,6 +50,7 @@ export interface EvaluationResults {
   config: {
     k: number;
     embeddingModel: string;
+    minSimilarityScore: number;
   };
 }
 
@@ -321,6 +322,7 @@ export class RAGEvaluator {
       config: {
         k,
         embeddingModel: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
+        minSimilarityScore: RAG_EVAL_CONFIG.MIN_SIMILARITY_SCORE,
       },
     };
   }

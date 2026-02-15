@@ -301,7 +301,9 @@ export default function DashboardPage() {
                                 {dateStr}
                               </h3>
                               <p className="text-sm text-gray-400">
-                                K={evalResult.config.k} | Tests: {evalResult.totalTests} |
+                                K={evalResult.config.k} |
+                                Min Score: {evalResult.config.minSimilarityScore ?? 'N/A'} |
+                                Tests: {evalResult.totalTests} |
                                 Avg Precision: {formatPercent(evalResult.aggregatedMetrics.avgPrecision)} |
                                 Avg Recall: {formatPercent(evalResult.aggregatedMetrics.avgRecall)}
                               </p>
