@@ -1,0 +1,57 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug RAG Evaluator",
+      "runtimeArgs": ["-r", "tsconfig-paths/register", "-r", "ts-node/register"],
+      "args": ["${workspaceFolder}/coding-ai-agent/evaluation/rag/debug-evaluator.ts"],
+      "cwd": "${workspaceFolder}/coding-ai-agent",
+      "env": {
+        "NODE_ENV": "development",
+        "TS_NODE_PROJECT": "${workspaceFolder}/coding-ai-agent/tsconfig.node.json"
+      },
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Current TS File",
+      "runtimeArgs": ["-r", "tsconfig-paths/register", "-r", "ts-node/register"],
+      "args": ["${file}"],
+      "cwd": "${workspaceFolder}/coding-ai-agent",
+      "env": {
+        "NODE_ENV": "development",
+        "TS_NODE_PROJECT": "${workspaceFolder}/coding-ai-agent/tsconfig.node.json"
+      },
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "outputCapture": "std"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Debug Python: chunk_cs_files.py",
+      "program": "${workspaceFolder}/code-indexer/chunk_cs_files.py",
+      "console": "integratedTerminal",
+      "args": [
+        "../codebase/AlgebraBasics.cs",
+        "--test"
+      ],
+      "cwd": "${workspaceFolder}/code-indexer",
+      "justMyCode": true
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Debug Current Python File",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "cwd": "${fileDirname}",
+      "justMyCode": true
+    }
+  ]
+}
