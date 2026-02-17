@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import { appConfig } from './config';
+import { appConfig } from '@/app.config';
 
 /**
  * Represents a search result with score and payload metadata
