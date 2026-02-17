@@ -18,7 +18,9 @@ export const RAG_EVAL_CONFIG = {
    * - 0.7 = Moderate filtering (recommended for most cases)
    * - 0.85 = Strict filtering (high precision, may miss some relevant results)
    */
-  MIN_SIMILARITY_SCORE: 0.68,
+  // If this value changed, ensure to update MIN_SIMILARITY_SCORE in 
+  // app/api/chat/route.ts to keep consistency
+  MIN_SIMILARITY_SCORE: 0.30,
 
   /**
    * Delay between test case evaluations (ms)

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { addDocument, ensureCollection } from '@/lib/qdrant';
 import { v4 as uuidv4 } from 'uuid';
+import { appConfig } from '@/app.config';
 
 // Initialize OpenAI client with API key
 const openai = new OpenAI({
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     // Create embedding
     const embeddingResponse = await openai.embeddings.create({
-      model: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
+      model: appConfig.openai.embeddingModel,
       input: text,
     });
     const embedding = embeddingResponse.data[0].embedding;

@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { EvaluationResults } from '@/evaluation/rag/rag-evaluator';
+import { PromptEvaluationResults } from '@/evaluation/prompt/prompt-evaluator';
 import { RAG_EVAL_CONFIG } from '@/evaluation/rag/config';
+import { PROMPT_EVAL_CONFIG } from '@/evaluation/prompt/config';
 
 export default function DashboardPage() {
+  // RAG Evaluation State
   const [results, setResults] = useState<EvaluationResults | null>(null);
   const [allResults, setAllResults] = useState<EvaluationResults[]>([]);
   const [loading, setLoading] = useState(false);
@@ -15,10 +18,23 @@ export default function DashboardPage() {
   const [showIndividualResults, setShowIndividualResults] = useState(false);
   const [expandedResults, setExpandedResults] = useState<Set<string>>(new Set());
 
+  // Prompt Evaluation State
+  const [promptResults, setPromptResults] = useState<PromptEvaluationResults | null>(null);
+  const [allPromptResults, setAllPromptResults] = useState<PromptEvaluationResults[]>([]);
+  const [promptLoading, setPromptLoading] = useState(false);
+  const [promptEvaluating, setPromptEvaluating] = useState(false);
+  const [promptProgress, setPromptProgress] = useState(0);
+  const [promptProgressMessage, setPromptProgressMessage] = useState('');
+  const [promptError, setPromptError] = useState<string | null>(null);
+  const [showPromptIndividualResults, setShowPromptIndividualResults] = useState(false);
+  const [expandedPromptResults, setExpandedPromptResults] = useState<Set<string>>(new Set());
+
   // Load existing results on mount
   useEffect(() => {
     loadResults();
     loadAllResults();
+    loadPromptResults();
+    loadAllPromptResults();
   }, []);
 
   const loadResults = async () => {
@@ -62,6 +78,112 @@ export default function DashboardPage() {
       }
       return newSet;
     });
+  };
+
+  // Prompt Evaluation Functions
+  const loadPromptResults = async () => {
+    setPromptLoading(true);
+    setPromptError(null);
+    try {
+      const response = await fetch('/api/evaluate/prompt');
+      if (response.ok) {
+        const data = await response.json();
+        setPromptResults(data);
+      } else {
+        const errorData = await response.json();
+        setPromptError(errorData.error || 'No results available');
+      }
+    } catch (err: any) {
+      setPromptError(err.message || 'Failed to load results');
+    } finally {
+      setPromptLoading(false);
+    }
+  };
+
+  const loadAllPromptResults = async () => {
+    try {
+      const response = await fetch('/api/evaluate/prompt?history=true');
+      if (response.ok) {
+        const data = await response.json();
+        setAllPromptResults(data);
+      }
+    } catch (err: any) {
+      console.error('Failed to load prompt history:', err);
+    }
+  };
+
+  const togglePromptResultExpanded = (timestamp: string) => {
+    setExpandedPromptResults(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(timestamp)) {
+        newSet.delete(timestamp);
+      } else {
+        newSet.add(timestamp);
+      }
+      return newSet;
+    });
+  };
+
+  const runPromptEvaluation = async () => {
+    setPromptEvaluating(true);
+    setPromptProgress(0);
+    setPromptProgressMessage('Starting prompt evaluation...');
+    setPromptError(null);
+
+    try {
+      const response = await fetch('/api/evaluate/prompt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to start evaluation');
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+
+      if (!reader) {
+        throw new Error('No response stream');
+      }
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+
+              if (data.type === 'progress') {
+                setPromptProgress(data.progress);
+                setPromptProgressMessage(data.message);
+              } else if (data.type === 'complete') {
+                setPromptResults(data.results);
+                setPromptProgress(100);
+                setPromptProgressMessage('Evaluation complete!');
+                // Reload all results to include the new one
+                loadAllPromptResults();
+              } else if (data.type === 'error') {
+                setPromptError(data.message);
+              }
+            } catch (e) {
+              console.error('Failed to parse SSE data:', e);
+            }
+          }
+        }
+      }
+    } catch (err: any) {
+      setPromptError(err.message || 'Evaluation failed');
+    } finally {
+      setPromptEvaluating(false);
+    }
   };
 
   const runEvaluation = async () => {
@@ -229,7 +351,7 @@ export default function DashboardPage() {
                     {new Date(results.timestamp).toLocaleString()}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   <MetricCard
                     title={`Precision@${RAG_EVAL_CONFIG.K}`}
                     value={formatPercent(results.aggregatedMetrics.avgPrecision)}
@@ -244,11 +366,6 @@ export default function DashboardPage() {
                     title="MRR"
                     value={formatDecimal(results.aggregatedMetrics.avgMRR)}
                     color="purple"
-                  />
-                  <MetricCard
-                    title={`NDCG@${RAG_EVAL_CONFIG.K}`}
-                    value={formatDecimal(results.aggregatedMetrics.avgNDCG)}
-                    color="yellow"
                   />
                   <MetricCard
                     title="F1 Score"
@@ -407,10 +524,292 @@ export default function DashboardPage() {
                 />
               </svg>
               <h3 className="text-xl font-semibold text-white mb-2">
-                No Evaluation Results Yet
+                No RAG Evaluation Results Yet
               </h3>
               <p className="text-gray-400 mb-6">
                 Click "Run Evaluation" to start assessing your RAG system
+              </p>
+            </div>
+          )}
+
+          {/* Prompt Evaluation Section */}
+          <div className="mt-16 mb-6">
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Prompt Evaluation (LLM Judge)
+            </h2>
+          </div>
+
+          {/* Prompt Actions */}
+          <div className="mb-8 flex gap-4">
+            <button
+              onClick={runPromptEvaluation}
+              disabled={promptEvaluating}
+              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+            >
+              {promptEvaluating ? (
+                <>
+                  Running Prompt Evaluation...
+                </>
+              ) : (
+                <>
+                  Run Prompt Evaluation
+                </>
+              )}
+            </button>
+
+            <button
+              onClick={loadPromptResults}
+              disabled={promptLoading || promptEvaluating}
+              className="px-4 py-3 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 text-white font-medium rounded-lg transition-colors"
+              title="Refresh Results"
+            >
+              <svg
+                className={`w-5 h-5 ${promptLoading ? 'animate-spin' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Prompt Progress Bar */}
+          {promptEvaluating && (
+            <div className="mb-8 bg-gray-800 rounded-lg p-6">
+              <div className="mb-2 flex justify-between text-sm text-gray-300">
+                <span>{promptProgressMessage}</span>
+                <span>{promptProgress.toFixed(0)}%</span>
+              </div>
+              <div className="w-full bg-gray-700 rounded-full h-3">
+                <div
+                  className="bg-purple-600 h-3 rounded-full transition-all duration-300"
+                  style={{ width: `${promptProgress}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Prompt Error Message */}
+          {promptError && (
+            <div className="mb-8 bg-red-900/50 border border-red-600 rounded-lg p-4">
+              <p className="text-red-200">{promptError}</p>
+            </div>
+          )}
+
+          {/* Prompt Results */}
+          {promptResults && (
+            <div className="space-y-6">
+              {/* Overall Metrics */}
+              <div className="bg-gray-800 rounded-lg p-4">
+                <div className="flex justify-between items-center mb-3">
+                  <h2 className="text-xl font-bold text-white">
+                    Overall Performance
+                  </h2>
+                  <span className="text-sm text-gray-400">
+                    {new Date(promptResults.timestamp).toLocaleString()}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <MetricCard
+                    title="Answer Relevance"
+                    value={formatDecimal(promptResults.aggregatedMetrics.avgRelevance)}
+                    color="blue"
+                  />
+                  <MetricCard
+                    title="Answer Correctness"
+                    value={formatDecimal(promptResults.aggregatedMetrics.avgCorrectness)}
+                    color="green"
+                  />
+                  <MetricCard
+                    title="Groundedness"
+                    value={formatDecimal(promptResults.aggregatedMetrics.avgGroundedness)}
+                    color="purple"
+                  />
+                  <MetricCard
+                    title="Pass Rate"
+                    value={formatPercent(promptResults.aggregatedMetrics.passRate)}
+                    color="yellow"
+                  />
+                </div>
+                <div className="mt-4 text-sm text-gray-400">
+                  <p>Passed: {promptResults.passedTests} / {promptResults.totalTests} tests (Threshold: {PROMPT_EVAL_CONFIG.PASS_THRESHOLD}+ on all metrics)</p>
+                </div>
+              </div>
+
+              {/* Individual Results History - Collapsible */}
+              <div className="bg-gray-800 rounded-lg">
+                <button
+                  onClick={() => setShowPromptIndividualResults(!showPromptIndividualResults)}
+                  className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-750 transition-colors rounded-lg"
+                >
+                  <h2 className="text-2xl font-bold text-white">
+                    Evaluation History ({allPromptResults.length} runs)
+                  </h2>
+                  <svg
+                    className={`w-6 h-6 text-gray-400 transition-transform ${
+                      showPromptIndividualResults ? 'transform rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                {showPromptIndividualResults && (
+                  <div className="px-6 pb-6 space-y-4">
+                    {allPromptResults.map((evalResult) => {
+                      const isExpanded = expandedPromptResults.has(evalResult.timestamp);
+                      const date = new Date(evalResult.timestamp);
+                      const dateStr = date.toLocaleString();
+                      
+                      return (
+                        <div key={evalResult.timestamp} className="bg-gray-900 rounded-lg">
+                          <button
+                            onClick={() => togglePromptResultExpanded(evalResult.timestamp)}
+                            className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-850 transition-colors rounded-lg"
+                          >
+                            <div>
+                              <h3 className="text-lg font-semibold text-white">
+                                {dateStr}
+                              </h3>
+                              <p className="text-sm text-gray-400">
+                                Judge: {evalResult.config.judgeModel} |
+                                Tests: {evalResult.totalTests} |
+                                Passed: {evalResult.passedTests} |
+                                Avg Relevance: {formatDecimal(evalResult.aggregatedMetrics.avgRelevance)} |
+                                Avg Correctness: {formatDecimal(evalResult.aggregatedMetrics.avgCorrectness)} |
+                                Avg Groundedness: {formatDecimal(evalResult.aggregatedMetrics.avgGroundedness)}
+                              </p>
+                            </div>
+                            <svg
+                              className={`w-5 h-5 text-gray-400 transition-transform ${
+                                isExpanded ? 'transform rotate-180' : ''
+                              }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          </button>
+                          {isExpanded && (
+                            <div className="px-4 pb-4 overflow-x-auto">
+                              <table className="w-full text-left text-sm text-gray-300">
+                                <thead className="bg-gray-800 text-gray-400 uppercase text-xs">
+                                  <tr>
+                                    <th className="px-4 py-3">Test ID</th>
+                                    <th className="px-4 py-3">Question</th>
+                                    <th className="px-4 py-3">Difficulty</th>
+                                    <th className="px-4 py-3">Relevance</th>
+                                    <th className="px-4 py-3">Correctness</th>
+                                    <th className="px-4 py-3">Groundedness</th>
+                                    <th className="px-4 py-3">Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {evalResult.individualResults.map((result) => (
+                                    <tr
+                                      key={result.testId}
+                                      className="border-b border-gray-800 hover:bg-gray-850"
+                                    >
+                                      <td className="px-4 py-3 font-medium">
+                                        {result.testId}
+                                      </td>
+                                      <td className="px-4 py-3 max-w-md truncate">
+                                        {result.question}
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        <span
+                                          className={`px-2 py-1 rounded text-xs font-medium ${
+                                            result.difficulty === 'easy'
+                                              ? 'bg-green-900 text-green-200'
+                                              : result.difficulty === 'medium'
+                                              ? 'bg-yellow-900 text-yellow-200'
+                                              : 'bg-red-900 text-red-200'
+                                          }`}
+                                        >
+                                          {result.difficulty}
+                                        </span>
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        <span className={result.scores.relevance >= PROMPT_EVAL_CONFIG.PASS_THRESHOLD ? 'text-green-400' : 'text-red-400'}>
+                                          {result.scores.relevance}
+                                        </span>
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        <span className={result.scores.correctness >= PROMPT_EVAL_CONFIG.PASS_THRESHOLD ? 'text-green-400' : 'text-red-400'}>
+                                          {result.scores.correctness}
+                                        </span>
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        <span className={result.scores.groundedness >= PROMPT_EVAL_CONFIG.PASS_THRESHOLD ? 'text-green-400' : 'text-red-400'}>
+                                          {result.scores.groundedness}
+                                        </span>
+                                      </td>
+                                      <td className="px-4 py-3">
+                                        <span
+                                          className={`px-2 py-1 rounded text-xs font-medium ${
+                                            result.passed
+                                              ? 'bg-green-900 text-green-200'
+                                              : 'bg-red-900 text-red-200'
+                                          }`}
+                                        >
+                                          {result.passed ? 'PASS' : 'FAIL'}
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* No Prompt Results Yet */}
+          {!promptResults && !promptLoading && !promptEvaluating && !promptError && (
+            <div className="bg-gray-800 rounded-lg p-12 text-center">
+              <svg
+                className="w-16 h-16 mx-auto mb-4 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              <h3 className="text-xl font-semibold text-white mb-2">
+                No Prompt Evaluation Results Yet
+              </h3>
+              <p className="text-gray-400 mb-6">
+                Click "Run Prompt Evaluation" to start assessing your LLM responses
               </p>
             </div>
           )}

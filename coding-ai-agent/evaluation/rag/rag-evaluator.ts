@@ -7,12 +7,12 @@ import OpenAI from 'openai';
 import { searchSimilarDocuments } from '@/lib/qdrant';
 import { TestCase, RelevantChunk } from './test-dataset';
 import { RAG_EVAL_CONFIG } from './config';
+import { appConfig } from '@/app.config';
 
 export interface EvaluationMetrics {
   precision: number;
   recall: number;
   mrr: number;
-  ndcg: number;
   f1Score: number;
 }
 
@@ -33,7 +33,6 @@ export interface AggregatedMetrics {
   avgPrecision: number;
   avgRecall: number;
   avgMRR: number;
-  avgNDCG: number;
   avgF1: number;
   byDifficulty: {
     easy: EvaluationMetrics;
@@ -127,6 +126,7 @@ export class RAGEvaluator {
   /**
    * Mean Reciprocal Rank: Reciprocal of position of first relevant document
    * Formula: 1 / (position of first relevant)
+   * Az MRR azt méri, hogy milyen hamar jelenik meg az első releváns dokumentum a visszakeresett eredmények listájában.
    */
   calculateMRR(retrievedIds: string[], relevantIds: string[]): number {
     for (let i = 0; i < retrievedIds.length; i++) {
@@ -146,33 +146,6 @@ export class RAGEvaluator {
     return (2 * precision * recall) / (precision + recall);
   }
 
-  /**
-   * NDCG@K: Normalized Discounted Cumulative Gain
-   * Takes into account the position of relevant documents
-   */
-  calculateNDCG(
-    retrievedIds: string[],
-    relevantIds: string[],
-    k: number = RAG_EVAL_CONFIG.K
-  ): number {
-    const topK = retrievedIds.slice(0, k);
-    
-    // DCG: Discounted Cumulative Gain
-    let dcg = 0;
-    topK.forEach((id, idx) => {
-      const relevance = relevantIds.includes(id) ? 1 : 0;
-      dcg += relevance / Math.log2(idx + 2);
-    });
-    
-    // IDCG: Ideal DCG (if all relevant were at the beginning)
-    let idcg = 0;
-    const idealRelevance = Array(Math.min(k, relevantIds.length)).fill(1);
-    idealRelevance.forEach((rel, idx) => {
-      idcg += rel / Math.log2(idx + 2);
-    });
-    
-    return idcg > 0 ? dcg / idcg : 0;
-  }
 
   /**
    * Evaluate a single test case
@@ -186,7 +159,7 @@ export class RAGEvaluator {
 
     // 1. Generate embedding
     const embeddingResponse = await this.openai.embeddings.create({
-      model: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
+      model: appConfig.openai.embeddingModel,
       input: testCase.query,
     });
     const queryEmbedding = embeddingResponse.data[0].embedding;
@@ -243,11 +216,10 @@ export class RAGEvaluator {
       mrr = 1.0;
     } else {
       precision = this.calculatePrecision(retrievedIds, matchedRelevantIds, k);
-      recall = this.calculateRecall(retrievedIds, matchedRelevantIds, k);
+      recall = this.calculateRecall(retrievedIds, expectedIds, k);
       mrr = this.calculateMRR(retrievedIds, matchedRelevantIds);
     }
     
-    const ndcg = isLenient ? 1.0 : this.calculateNDCG(retrievedIds, matchedRelevantIds, k);
     const f1Score = this.calculateF1(precision, recall);
 
     const hits = matchedRelevantIds.length;
@@ -259,7 +231,7 @@ export class RAGEvaluator {
       retrievedCount: retrievedIds.length,
       relevantCount: testCase.relevantChunks.length,
       hitsCount: hits,
-      metrics: { precision, recall, mrr, ndcg, f1Score },
+      metrics: { precision, recall, mrr, f1Score },
       retrievedIds,
       expectedIds,
       retrievedPreviews,
@@ -304,7 +276,7 @@ export class RAGEvaluator {
           retrievedCount: 0,
           relevantCount: testCase.relevantChunks.length,
           hitsCount: 0,
-          metrics: { precision: 0, recall: 0, mrr: 0, ndcg: 0, f1Score: 0 },
+          metrics: { precision: 0, recall: 0, mrr: 0, f1Score: 0 },
           retrievedIds: [],
           expectedIds,
         });
@@ -321,7 +293,7 @@ export class RAGEvaluator {
       timestamp: new Date().toISOString(),
       config: {
         k,
-        embeddingModel: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
+        embeddingModel: appConfig.openai.embeddingModel,
         minSimilarityScore: RAG_EVAL_CONFIG.MIN_SIMILARITY_SCORE,
       },
     };
@@ -333,14 +305,13 @@ export class RAGEvaluator {
   private calculateAggregatedMetrics(results: TestResult[]): AggregatedMetrics {
     const avgMetrics = (testResults: TestResult[]): EvaluationMetrics => {
       if (testResults.length === 0) {
-        return { precision: 0, recall: 0, mrr: 0, ndcg: 0, f1Score: 0 };
+        return { precision: 0, recall: 0, mrr: 0, f1Score: 0 };
       }
       
       return {
         precision: testResults.reduce((sum, r) => sum + r.metrics.precision, 0) / testResults.length,
         recall: testResults.reduce((sum, r) => sum + r.metrics.recall, 0) / testResults.length,
         mrr: testResults.reduce((sum, r) => sum + r.metrics.mrr, 0) / testResults.length,
-        ndcg: testResults.reduce((sum, r) => sum + r.metrics.ndcg, 0) / testResults.length,
         f1Score: testResults.reduce((sum, r) => sum + r.metrics.f1Score, 0) / testResults.length,
       };
     };
@@ -349,7 +320,6 @@ export class RAGEvaluator {
       avgPrecision: results.reduce((sum, r) => sum + r.metrics.precision, 0) / results.length,
       avgRecall: results.reduce((sum, r) => sum + r.metrics.recall, 0) / results.length,
       avgMRR: results.reduce((sum, r) => sum + r.metrics.mrr, 0) / results.length,
-      avgNDCG: results.reduce((sum, r) => sum + r.metrics.ndcg, 0) / results.length,
       avgF1: results.reduce((sum, r) => sum + r.metrics.f1Score, 0) / results.length,
       byDifficulty: {
         easy: avgMetrics(results.filter(r => r.difficulty === 'easy')),

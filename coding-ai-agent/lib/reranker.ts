@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import { appConfig } from './config';
 
 /**
  * Represents a search result with score and payload metadata
@@ -67,7 +68,7 @@ Example: {"scores": [8.5, 6.0, 9.5, 3.0]}`;
 
   try {
     const response = await openai.chat.completions.create({
-      model: process.env.OPENAI_CHAT_MODEL_FOR_RERANKER || 'gpt-4o-mini', // Cost-effective model for reranking
+      model: appConfig.openai.chatModelForReranker, // Cost-effective model for reranking
       messages: [{ role: 'user', content: prompt }],
       temperature: 0,
       max_tokens: 200,

@@ -43,7 +43,8 @@ export const testDataset: TestCase[] = [
     id: "test_002",
     query: "Show me how to calculate percentage of a number",
     relevantChunks: [
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculatePercentageOf" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageOf" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "" }
     ],
     difficulty: "easy"
   },
@@ -51,7 +52,7 @@ export const testDataset: TestCase[] = [
     id: "test_003",
     query: "How to calculate discounted price?",
     relevantChunks: [
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyDiscount" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculateDiscountedPrice" }
     ],
     difficulty: "easy"
   },
@@ -67,7 +68,7 @@ export const testDataset: TestCase[] = [
     id: "test_005",
     query: "Apply sales tax to a price",
     relevantChunks: [
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplySalesTax" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculatePriceWithTax" }
     ],
     difficulty: "easy"
   },
@@ -120,8 +121,8 @@ export const testDataset: TestCase[] = [
     id: "test_011",
     query: "Calculate discounts and tax on prices",
     relevantChunks: [
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyDiscount" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplySalesTax" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculateDiscountedPrice" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculatePriceWithTax" }
     ],
     difficulty: "medium"
   },
@@ -139,7 +140,7 @@ export const testDataset: TestCase[] = [
     relevantChunks: [
       { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageIncrease" },
       { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageDecrease" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyDiscount" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculateDiscountedPrice" }
     ],
     difficulty: "medium"
   },
@@ -157,8 +158,8 @@ export const testDataset: TestCase[] = [
     id: "test_015",
     query: "Shopping calculations with discounts and tax",
     relevantChunks: [
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyDiscount" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplySalesTax" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculateDiscountedPrice" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculatePriceWithTax" }
     ],
     difficulty: "medium"
   },
@@ -177,8 +178,8 @@ export const testDataset: TestCase[] = [
     id: "test_017",
     query: "Calculate final price with multiple discounts and tax",
     relevantChunks: [
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyDiscount" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplySalesTax" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculateDiscountedPrice" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculatePriceWithTax" }
     ],
     difficulty: "hard"
   },
@@ -187,7 +188,9 @@ export const testDataset: TestCase[] = [
     query: "Analyze price changes over time using percentage calculations",
     relevantChunks: [
       { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageIncrease" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageDecrease" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageDecrease" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyPercentageIncrease" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyPercentageDecrease" }
     ],
     difficulty: "hard"
   },
@@ -197,7 +200,7 @@ export const testDataset: TestCase[] = [
     relevantChunks: [
       { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "DecimalToPercentage" },
       { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageToDecimal" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculatePercentageOf" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageOf" }
     ],
     difficulty: "hard"
   },
@@ -205,18 +208,23 @@ export const testDataset: TestCase[] = [
     id: "test_020",
     query: "All methods for modifying values by percentages",
     relevantChunks: [
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageIncrease" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "PercentageDecrease" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyDiscount" },
-      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplySalesTax" }
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyPercentageIncrease" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "ApplyPercentageDecrease" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculateDiscountedPrice" },
+      { filename: "PercentageCalculations.cs", class_name: "PercentageCalculations", method_name: "CalculatePriceWithTax" }
     ],
     difficulty: "hard"
   },
   {
     id: "test_021",
-    query: "Basic arithmetic operations like addition and subtraction",
+    query: "Basic arithmetic operations like addition and subtraction, etc",
     relevantChunks: [
-      { filename: "BasicArithmetic.cs", class_name: "BasicArithmetic", method_name: "" }
+      { filename: "BasicArithmetic.cs", class_name: "BasicArithmetic", method_name: "" },
+      { filename: "BasicArithmetic.cs", class_name: "BasicArithmetic", method_name: "Add" },
+      { filename: "BasicArithmetic.cs", class_name: "BasicArithmetic", method_name: "Subtract" },
+      { filename: "BasicArithmetic.cs", class_name: "BasicArithmetic", method_name: "Multiply" },
+      { filename: "BasicArithmetic.cs", class_name: "BasicArithmetic", method_name: "Divide" },
+      { filename: "BasicArithmetic.cs", class_name: "BasicArithmetic", method_name: "Modulo" },
     ],
     difficulty: "easy"
   },

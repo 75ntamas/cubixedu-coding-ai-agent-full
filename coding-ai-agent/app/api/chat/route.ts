@@ -4,11 +4,14 @@ import path from 'path';
 import OpenAI from 'openai';
 import { searchSimilarDocuments } from '@/lib/qdrant';
 import { rerankWithLLM, SearchResult } from '@/lib/reranker';
+import { appConfig } from '@/app.config';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+const MIN_SIMILARITY_SCORE = 0.5;
 
 // Load system prompt
 const systemPromptPath = path.join(process.cwd(), 'system-prompt.md');
@@ -56,14 +59,14 @@ async function searchCodeKnowledge(query: string) {
   try {
     // Step 1: RETRIEVAL - Create embedding for the query
     const embeddingResponse = await openai.embeddings.create({
-      model: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
+      model: appConfig.openai.embeddingModel,
       input: query,
     });
     const queryEmbedding = embeddingResponse.data[0].embedding;
 
     // Step 2: RETRIEVAL - Search similar documents in Qdrant (get top 20 candidates)
     // Filter by minScore=0.5 to reduce noise and decrease LLM cost before reranking
-    const retrievalResults = await searchSimilarDocuments(queryEmbedding, 20, 0.5);
+    const retrievalResults = await searchSimilarDocuments(queryEmbedding, 20, MIN_SIMILARITY_SCORE);
 
     // Step 3: RERANKING - Use LLM to rerank results for better relevance
     // This evaluates the actual content relevance beyond just vector similarity
@@ -114,7 +117,7 @@ export async function POST(req: NextRequest) {
 
           // Send the request to the OpenAI API and wait until the streaming connection is established
           const response = await openai.chat.completions.create({
-            model: process.env.OPENAI_CHAT_MODEL || 'gpt-4-turbo',
+            model: appConfig.openai.chatModel,
             messages: [systemMessage, ...messages], // system and user messages to send to the OpenAI API
             tools: tools, // Tools to use
             tool_choice: 'auto', // Auto-select the tool to use
@@ -199,7 +202,7 @@ export async function POST(req: NextRequest) {
 
               // Get final response
               const finalResponse = await openai.chat.completions.create({
-                model: process.env.OPENAI_CHAT_MODEL || 'gpt-4-turbo',
+                model: appConfig.openai.chatModel,
                 messages: tool_call_Messages,
                 stream: true,
               });
