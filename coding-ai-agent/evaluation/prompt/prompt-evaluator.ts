@@ -31,6 +31,8 @@ export interface PromptTestResult {
     groundedness: string;
   };
   passed: boolean;
+  answerModel: string; // Model that generated the answer
+  judgeModel: string; // Model that judged the answer
 }
 
 export interface AggregatedPromptMetrics {
@@ -53,6 +55,7 @@ export interface PromptEvaluationResults {
   failedTests: number;
   timestamp: string;
   config: {
+    answerModel: string;
     judgeModel: string;
     judgeTemperature: number;
     passThreshold: number;
@@ -254,6 +257,8 @@ Provide your evaluation in this exact JSON format:
         groundedness: groundednessJudgment.reason,
       },
       passed,
+      answerModel: appConfig.openai.chatModel,
+      judgeModel: PROMPT_EVAL_CONFIG.JUDGE_MODEL,
     };
   }
 
@@ -296,6 +301,8 @@ Provide your evaluation in this exact JSON format:
             groundedness: 'Error during evaluation',
           },
           passed: false,
+          answerModel: appConfig.openai.chatModel,
+          judgeModel: PROMPT_EVAL_CONFIG.JUDGE_MODEL,
         });
       }
     }
@@ -312,6 +319,7 @@ Provide your evaluation in this exact JSON format:
       failedTests: results.length - passedTests,
       timestamp: new Date().toISOString(),
       config: {
+        answerModel: appConfig.openai.chatModel,
         judgeModel: PROMPT_EVAL_CONFIG.JUDGE_MODEL,
         judgeTemperature: PROMPT_EVAL_CONFIG.JUDGE_TEMPERATURE,
         passThreshold: PROMPT_EVAL_CONFIG.PASS_THRESHOLD,
