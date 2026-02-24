@@ -1,0 +1,1856 @@
+{
+  "individualResults": [
+    {
+      "testId": "journey_001",
+      "name": "Basic Code Lookup",
+      "difficulty": "easy",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "How do I calculate a percentage of a number?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "In this codebase, you calculate a percentage of a number using PercentageCalculations.PercentageOf in PercentageCalculations.cs.\n\nRelevant code (PercentageCalculations.cs, class PercentageCalculations, method PercentageOf):\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nHow it works:\n1) Divide the percentage by 100 to convert it to a decimal (for example, 25 becomes 0.25).\n2) Multiply that decimal by the number.\n\nExample usage based on the method’s documented examples (PercentageCalculations.cs, PercentageCalculations.PercentageOf):\nPercentageCalculations.PercentageOf(25, 200) returns 50\nPercentageCalculations.PercentageOf(10, 150) returns 15\nPercentageCalculations.PercentageOf(75, 80) returns 60",
+          "performance": {
+            "ttft": 3262.460099999793,
+            "ttlt": 5319.80169999972,
+            "e2e_latency": 5328.806499999948,
+            "tokens_per_second": 32.70798608903207
+          },
+          "token_usage": {
+            "input_tokens": 12,
+            "output_tokens": 193,
+            "total_tokens": 205
+          },
+          "cost": {
+            "input_cost": 0.000021000000000000002,
+            "output_cost": 0.002702,
+            "total_cost": 0.002723
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "Can you show me an example of using that method?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "Here’s a concrete example of calling the method PercentageCalculations.PercentageOf from PercentageCalculations.cs (class PercentageCalculations, method PercentageOf):\n\nRelevant method code:\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nExample usage in C#:\n\ndouble discount = PercentageCalculations.PercentageOf(25, 200);\nConsole.WriteLine(discount);\n\nThis will print 50, because 25% of 200 is 50 (as shown in the method’s XML example in PercentageCalculations.cs, PercentageCalculations.PercentageOf).",
+          "performance": {
+            "ttft": 3682.6058999998495,
+            "ttlt": 5563.607599999756,
+            "e2e_latency": 5570.9087999993935,
+            "tokens_per_second": 22.10795743395084
+          },
+          "token_usage": {
+            "input_tokens": 217,
+            "output_tokens": 143,
+            "total_tokens": 360
+          },
+          "cost": {
+            "input_cost": 0.00037975,
+            "output_cost": 0.0020020000000000003,
+            "total_cost": 0.00238175
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 3,
+        "accuracy": 3,
+        "completeness": 3,
+        "clarity": 3
+      },
+      "qualityReasoning": "Both responses directly address the user’s questions: first explaining how to calculate a percentage and then showing a concrete C# usage example. The formula and sample outputs are correct ((percentage/100)*number), and the second turn provides a clear, runnable snippet with an explanation of why it prints 50. The answers cover the expected outcomes and are easy to follow.",
+      "satisfactionScore": {
+        "liked": true,
+        "reasoning": "The assistant directly answered how to calculate a percentage, pointed to the exact method, explained the formula clearly, and then provided a simple C# example showing how to call it and what output to expect."
+      },
+      "totalPerformance": {
+        "avg_ttft": 3472.532999999821,
+        "avg_ttlt": 5441.704649999738,
+        "avg_e2e_latency": 5449.857649999671,
+        "total_duration": 10899.715299999341
+      },
+      "totalTokenUsage": {
+        "input_tokens": 229,
+        "output_tokens": 336,
+        "total_tokens": 565
+      },
+      "totalCost": {
+        "input_cost": 0.00040075,
+        "output_cost": 0.004704,
+        "total_cost": 0.00510475
+      },
+      "qualityPassed": true,
+      "satisfactionPassed": true,
+      "overallPassed": true,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_002",
+      "name": "Simple Clarification Flow",
+      "difficulty": "easy",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "How do I work with discounts?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "",
+          "performance": {
+            "ttft": 0,
+            "ttlt": 0,
+            "e2e_latency": 2469.8537999996915,
+            "tokens_per_second": 0
+          },
+          "token_usage": {
+            "input_tokens": 8,
+            "output_tokens": 0,
+            "total_tokens": 8
+          },
+          "cost": {
+            "input_cost": 0.000014,
+            "output_cost": 0,
+            "total_cost": 0.000014
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "I mean calculating the final price after applying a discount",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "",
+          "performance": {
+            "ttft": 0,
+            "ttlt": 0,
+            "e2e_latency": 2193.641699999571,
+            "tokens_per_second": 0
+          },
+          "token_usage": {
+            "input_tokens": 23,
+            "output_tokens": 0,
+            "total_tokens": 23
+          },
+          "cost": {
+            "input_cost": 0.00004025,
+            "output_cost": 0,
+            "total_cost": 0.00004025
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 0,
+        "accuracy": 0,
+        "completeness": 0,
+        "clarity": 0
+      },
+      "qualityReasoning": "The assistant provided no responses in either turn, so it did not address the user’s questions, did not provide any discount calculation method or explanation, and offered no clear guidance.",
+      "satisfactionScore": {
+        "liked": false,
+        "reasoning": "The assistant didn’t respond to either question, so it didn’t address my vague query or the clarified request about calculating final price after a discount. I got no explanation or guidance."
+      },
+      "totalPerformance": {
+        "avg_ttft": 0,
+        "avg_ttlt": 0,
+        "avg_e2e_latency": 2331.747749999631,
+        "total_duration": 4663.495499999262
+      },
+      "totalTokenUsage": {
+        "input_tokens": 31,
+        "output_tokens": 0,
+        "total_tokens": 31
+      },
+      "totalCost": {
+        "input_cost": 0.000054250000000000004,
+        "output_cost": 0,
+        "total_cost": 0.000054250000000000004
+      },
+      "qualityPassed": false,
+      "satisfactionPassed": false,
+      "overallPassed": false,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_003",
+      "name": "Basic Math Operations",
+      "difficulty": "easy",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "What basic math operations are available?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "{\"query\":\"filename:BasicArithmetic.cs class_name:BasicArithmetic method_name:Add\",\"limit\":5}그\n",
+          "performance": {
+            "ttft": 54520.44219999947,
+            "ttlt": 54999.346499999985,
+            "e2e_latency": 54999.563899999484,
+            "tokens_per_second": 0.4181867870011875
+          },
+          "token_usage": {
+            "input_tokens": 11,
+            "output_tokens": 24,
+            "total_tokens": 35
+          },
+          "cost": {
+            "input_cost": 0.00001925,
+            "output_cost": 0.00033600000000000004,
+            "total_cost": 0.00035525000000000004
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "How does the divide method handle division by zero?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "In BasicArithmetic.cs, the BasicArithmetic.Divide(double a, double b) method explicitly checks for division by zero and throws an exception if the divisor is zero.\n\nRelevant code (BasicArithmetic.cs, class BasicArithmetic, method Divide):\n\npublic static double Divide(double a, double b)\n{\n    if (b == 0)\n    {\n        throw new DivideByZeroException(\"Cannot divide by zero\");\n    }\n    return a / b;\n}\n\nBehavior:\n1) If b == 0, it throws DivideByZeroException with the message \"Cannot divide by zero\".\n2) Otherwise it returns a / b as a double.\n\nSo calling BasicArithmetic.Divide(10, 0) will throw, and you’d need to handle it with try/catch if you want to recover gracefully.",
+          "performance": {
+            "ttft": 2126.390099999495,
+            "ttlt": 4160.375699999742,
+            "e2e_latency": 4169.330099999905,
+            "tokens_per_second": 38.458065217525885
+          },
+          "token_usage": {
+            "input_tokens": 48,
+            "output_tokens": 170,
+            "total_tokens": 218
+          },
+          "cost": {
+            "input_cost": 0.00008400000000000001,
+            "output_cost": 0.00238,
+            "total_cost": 0.002464
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 2,
+        "accuracy": 1,
+        "completeness": 1,
+        "clarity": 2
+      },
+      "qualityReasoning": "The first response to 'What basic math operations are available?' is essentially a malformed tool/query snippet plus stray text, so it does not answer the question (hurting relevance/completeness/clarity). The second response is relevant to division-by-zero handling and is clearly explained, but its accuracy cannot be verified from the conversation (it invents specific code and behavior without evidence), so accuracy is scored low. Overall, only the second turn meaningfully addresses a user question, and the expected outcome of listing basic operations was not met.",
+      "satisfactionScore": {
+        "liked": false,
+        "reasoning": "The first response to my question about available math operations was basically unusable (it just showed a weird JSON query and random characters), so it didn’t answer what I asked. The second answer about division by zero was clear and helpful, but overall the conversation didn’t meet my goals because I never got the list of basic operations."
+      },
+      "totalPerformance": {
+        "avg_ttft": 28323.41614999948,
+        "avg_ttlt": 29579.861099999864,
+        "avg_e2e_latency": 29584.446999999695,
+        "total_duration": 59168.89399999939
+      },
+      "totalTokenUsage": {
+        "input_tokens": 59,
+        "output_tokens": 194,
+        "total_tokens": 253
+      },
+      "totalCost": {
+        "input_cost": 0.00010325000000000002,
+        "output_cost": 0.002716,
+        "total_cost": 0.00281925
+      },
+      "qualityPassed": false,
+      "satisfactionPassed": false,
+      "overallPassed": false,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_004",
+      "name": "Complex Calculation Workflow",
+      "difficulty": "medium",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "I need to calculate a final price with both discount and tax",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "You can do this in two steps using the methods in PercentageCalculations.cs (class PercentageCalculations): apply the discount first, then apply tax to the discounted price.\n\nRelevant methods (PercentageCalculations.cs, class PercentageCalculations):\n\n1) Discount:\npublic static double CalculateDiscountedPrice(double originalPrice, double discountPercentage)\n{\n    return ApplyPercentageDecrease(originalPrice, discountPercentage);\n}\n\n2) Tax:\npublic static double CalculatePriceWithTax(double basePrice, double taxPercentage)\n{\n    return ApplyPercentageIncrease(basePrice, taxPercentage);\n}\n\nHow to calculate final price with both discount and tax (discount first, then tax):\n\ndouble originalPrice = 100;\ndouble discountPercentage = 25;\ndouble taxPercentage = 8;\n\ndouble discounted = PercentageCalculations.CalculateDiscountedPrice(originalPrice, discountPercentage);\ndouble finalPrice = PercentageCalculations.CalculatePriceWithTax(discounted, taxPercentage);\n\nWith the numbers above:\ndiscounted = 75\nfinalPrice = 81 (because 75 + 8% = 81)\n\nIf you tell me whether your tax should apply before or after the discount (most common is after discount), I can confirm the correct order for your case.",
+          "performance": {
+            "ttft": 2353.8909999998286,
+            "ttlt": 5514.052299999632,
+            "e2e_latency": 5522.538300000131,
+            "tokens_per_second": 43.88786809294793
+          },
+          "token_usage": {
+            "input_tokens": 16,
+            "output_tokens": 300,
+            "total_tokens": 316
+          },
+          "cost": {
+            "input_cost": 0.000028,
+            "output_cost": 0.0042,
+            "total_cost": 0.004228
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "Should I apply the discount first or the tax first?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "The library code (PercentageCalculations.cs, class PercentageCalculations) supports either order, but it doesn’t encode a “correct” business rule. It just provides two separate operations:\n\n1) Discount (PercentageCalculations.cs, PercentageCalculations.CalculateDiscountedPrice)\npublic static double CalculateDiscountedPrice(double originalPrice, double discountPercentage)\n{\n    return ApplyPercentageDecrease(originalPrice, discountPercentage);\n}\n\n2) Tax (PercentageCalculations.cs, PercentageCalculations.CalculatePriceWithTax)\npublic static double CalculatePriceWithTax(double basePrice, double taxPercentage)\n{\n    return ApplyPercentageIncrease(basePrice, taxPercentage);\n}\n\nWhat changes is the result:\nIf tax and discount are percentages, the order usually changes the outcome unless tax is computed on a legally defined base.\n\nHow to do discount first then tax (common in many cases because tax is applied to the amount actually paid):\ndouble discounted = PercentageCalculations.CalculateDiscountedPrice(originalPrice, discountPercentage);\ndouble finalPrice = PercentageCalculations.CalculatePriceWithTax(discounted, taxPercentage);\n\nHow to do tax first then discount:\ndouble taxed = PercentageCalculations.CalculatePriceWithTax(originalPrice, taxPercentage);\ndouble finalPrice = PercentageCalculations.CalculateDiscountedPrice(taxed, discountPercentage);\n\nWhich should you pick?\nThis depends on your rules outside the codebase (e.g., your jurisdiction / invoice rules). If your tax is “sales tax on the post-discount selling price,” do discount first then tax. If your discount is applied after tax (less common, but sometimes used for “rebates” or specific adjustments), do tax first then discount.\n\nIf you tell me your intended meaning of “discount” (coupon at checkout vs rebate after purchase) and what “tax” represents (sales tax/VAT), I can tell you which order matches that scenario.",
+          "performance": {
+            "ttft": 2996.195099999197,
+            "ttlt": 8971.0055999998,
+            "e2e_latency": 8981.145599999465,
+            "tokens_per_second": 41.13251250227825
+          },
+          "token_usage": {
+            "input_tokens": 328,
+            "output_tokens": 475,
+            "total_tokens": 803
+          },
+          "cost": {
+            "input_cost": 0.000574,
+            "output_cost": 0.00665,
+            "total_cost": 0.0072239999999999995
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "Can you show me the code for that?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "Yes. Here’s code using the library methods in PercentageCalculations.cs (class PercentageCalculations) for both possible orders.\n\n1) Discount first, then tax (most common: tax applied to the discounted selling price)\n\ndouble originalPrice = 100.0;\ndouble discountPercentage = 25.0;\ndouble taxPercentage = 8.0;\n\ndouble discountedPrice = PercentageCalculations.CalculateDiscountedPrice(originalPrice, discountPercentage);\ndouble finalPrice = PercentageCalculations.CalculatePriceWithTax(discountedPrice, taxPercentage);\n\nThis uses:\nPercentageCalculations.cs, PercentageCalculations.CalculateDiscountedPrice\npublic static double CalculateDiscountedPrice(double originalPrice, double discountPercentage)\n{\n    return ApplyPercentageDecrease(originalPrice, discountPercentage);\n}\n\nPercentageCalculations.cs, PercentageCalculations.CalculatePriceWithTax\npublic static double CalculatePriceWithTax(double basePrice, double taxPercentage)\n{\n    return ApplyPercentageIncrease(basePrice, taxPercentage);\n}\n\n2) Tax first, then discount\n\ndouble originalPrice = 100.0;\ndouble discountPercentage = 25.0;\ndouble taxPercentage = 8.0;\n\ndouble priceWithTax = PercentageCalculations.CalculatePriceWithTax(originalPrice, taxPercentage);\ndouble finalPrice = PercentageCalculations.CalculateDiscountedPrice(priceWithTax, discountPercentage);\n\nUnder the hood, the discount is applied by PercentageCalculations.ApplyPercentageDecrease (PercentageCalculations.cs):\npublic static double ApplyPercentageDecrease(double value, double percentage)\n{\n    return value - PercentageOf(percentage, value);\n}",
+          "performance": {
+            "ttft": 2218.238700000569,
+            "ttlt": 5672.769299999811,
+            "e2e_latency": 5678.44579999987,
+            "tokens_per_second": 54.47075029122202
+          },
+          "token_usage": {
+            "input_tokens": 812,
+            "output_tokens": 394,
+            "total_tokens": 1206
+          },
+          "cost": {
+            "input_cost": 0.001421,
+            "output_cost": 0.005516,
+            "total_cost": 0.0069370000000000005
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 3,
+        "accuracy": 3,
+        "completeness": 3,
+        "clarity": 3
+      },
+      "qualityReasoning": "All responses directly address the user’s questions (how to compute final price, which order to apply, and code examples). The described method usage and arithmetic example (100 with 25% discount then 8% tax => 81) are correct, and the code snippets correctly show both operation orders using the referenced methods. The assistant also clearly explains that business rules/jurisdiction determine the correct order, and provides clear, readable examples.",
+      "satisfactionScore": {
+        "liked": true,
+        "reasoning": "The assistant understood what I was trying to do, explained that the order depends on business rules, and provided clear code examples for both discount-first and tax-first using the given methods. It was straightforward and gave me exactly what I needed to implement it."
+      },
+      "totalPerformance": {
+        "avg_ttft": 2522.774933333198,
+        "avg_ttlt": 6719.275733333081,
+        "avg_e2e_latency": 6727.3765666664885,
+        "total_duration": 20182.129699999467
+      },
+      "totalTokenUsage": {
+        "input_tokens": 1156,
+        "output_tokens": 1169,
+        "total_tokens": 2325
+      },
+      "totalCost": {
+        "input_cost": 0.002023,
+        "output_cost": 0.016366,
+        "total_cost": 0.018389000000000003
+      },
+      "qualityPassed": true,
+      "satisfactionPassed": true,
+      "overallPassed": true,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_005",
+      "name": "Comparison and Decision Making",
+      "difficulty": "medium",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "What are the different ways to work with percentage changes?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "{\"query\":\"PercentageCalculations PercentageOf method\"}",
+          "performance": {
+            "ttft": 66412.23780000024,
+            "ttlt": 66540.29930000007,
+            "e2e_latency": 66546.64599999972,
+            "tokens_per_second": 0.1502848665425223
+          },
+          "token_usage": {
+            "input_tokens": 16,
+            "output_tokens": 14,
+            "total_tokens": 30
+          },
+          "cost": {
+            "input_cost": 0.000028,
+            "output_cost": 0.000196,
+            "total_cost": 0.000224
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "Which one should I use to calculate price increase over time?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "For calculating a price increase over time, use PercentageCalculations.PercentageIncrease when you have an old price and a new price and you want the percent change between them.\n\nSource: PercentageCalculations.cs, class PercentageCalculations, method PercentageIncrease\n\nCode (from the library):\n\npublic static double PercentageIncrease(double originalValue, double newValue)\n{\n    if (originalValue == 0)\n    {\n        throw new ArgumentException(\"Original value cannot be zero\");\n    }\n    return ((newValue - originalValue) / originalValue) * 100;\n}\n\nHow to use it\nIf a price was 50 and is now 75:\n\ndouble pct = PercentageCalculations.PercentageIncrease(50, 75);  // returns 50.0\n\nIf instead you already know the percentage and you want to apply it to update the price (for example, increase a price by 10% each period), use PercentageCalculations.ApplyPercentageIncrease.\n\nSource: PercentageCalculations.cs, class PercentageCalculations, method ApplyPercentageIncrease\n\npublic static double ApplyPercentageIncrease(double value, double percentage)\n{\n    return value + PercentageOf(percentage, value);\n}\n\nExample:\n\ndouble newPrice = PercentageCalculations.ApplyPercentageIncrease(100, 10);  // 110\n\nIf you tell me whether you’re comparing two known prices (start vs end) or compounding a fixed percent each time period, I can point you to the best fit for your specific case.",
+          "performance": {
+            "ttft": 2799.9862999999896,
+            "ttlt": 7001.441699999385,
+            "e2e_latency": 7007.365699999966,
+            "tokens_per_second": 42.2770070341407
+          },
+          "token_usage": {
+            "input_tokens": 45,
+            "output_tokens": 345,
+            "total_tokens": 390
+          },
+          "cost": {
+            "input_cost": 0.00007875,
+            "output_cost": 0.00483,
+            "total_cost": 0.00490875
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "How is that different from just using the increase method?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "",
+          "performance": {
+            "ttft": 0,
+            "ttlt": 0,
+            "e2e_latency": 1940.0844999998808,
+            "tokens_per_second": 0
+          },
+          "token_usage": {
+            "input_tokens": 405,
+            "output_tokens": 0,
+            "total_tokens": 405
+          },
+          "cost": {
+            "input_cost": 0.00070875,
+            "output_cost": 0,
+            "total_cost": 0.00070875
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 2,
+        "accuracy": 2,
+        "completeness": 1,
+        "clarity": 2
+      },
+      "qualityReasoning": "The second assistant message is relevant and generally answers which method to use for price increase, distinguishing PercentageIncrease (compute percent change between two values) vs ApplyPercentageIncrease (apply a known percent to a value). However, the first assistant message is just a search/query string and does not answer the user’s question about different ways to work with percentage changes, reducing overall relevance and completeness. Accuracy appears mostly correct given the shown code snippets and examples, though it relies on assumed library context. The final user question (“How is that different from just using the increase method?”) is not answered at all, so completeness is low. Explanations in the second message are mostly clear.",
+      "satisfactionScore": {
+        "liked": false,
+        "reasoning": "The assistant answered the second question well with clear examples, but it didn’t respond at all to my last question about how it differs from using the increase method. Also the first reply was just a search/query string instead of an explanation, so it felt incomplete and inefficient."
+      },
+      "totalPerformance": {
+        "avg_ttft": 23070.74136666674,
+        "avg_ttlt": 24513.913666666485,
+        "avg_e2e_latency": 25164.69873333319,
+        "total_duration": 75494.09619999956
+      },
+      "totalTokenUsage": {
+        "input_tokens": 466,
+        "output_tokens": 359,
+        "total_tokens": 825
+      },
+      "totalCost": {
+        "input_cost": 0.0008154999999999999,
+        "output_cost": 0.005026,
+        "total_cost": 0.0058415
+      },
+      "qualityPassed": false,
+      "satisfactionPassed": false,
+      "overallPassed": false,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_006",
+      "name": "Error Recovery",
+      "difficulty": "medium",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "I tried using the percentage method but I'm getting weird results",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "In PercentageCalculations.cs there are two different “percentage” style methods, and “weird results” usually happen when the wrong one is used or the inputs are interpreted incorrectly.\n\n1) PercentageCalculations.PercentageOf(percentage, number)\nThis calculates a percentage of a number using (percentage / 100) * number.\n\nCode (PercentageCalculations.cs, class PercentageCalculations, method PercentageOf):\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nImportant detail: percentage is expected as 25 for 25%, not 0.25.\nSo:\nPercentageOf(25, 200) = 50\nBut if you pass 0.25:\nPercentageOf(0.25, 200) = 0.5 (often perceived as “wrong/weird”)\n\n2) PercentageCalculations.WhatPercentOf(part, whole)\nThis calculates what percent part is of whole using (part / whole) * 100, and throws if whole == 0.\n\nCode (PercentageCalculations.cs, class PercentageCalculations, method WhatPercentOf):\npublic static double WhatPercentOf(double part, double whole)\n{\n    if (whole == 0)\n    {\n        throw new ArgumentException(\"The whole value cannot be zero\");\n    }\n    return (part / whole) * 100;\n}\n\nSo:\nWhatPercentOf(25, 200) = 12.5\nIf you expected 50 here, you likely meant PercentageOf(25, 200).\n\nTo pinpoint what’s happening in your case, tell me:\n1) Which method are you calling (PercentageOf or WhatPercentOf)?\n2) The exact inputs you passed (the two numbers)\n3) The result you got vs the result you expected",
+          "performance": {
+            "ttft": 3211.009100000374,
+            "ttlt": 8127.228099999949,
+            "e2e_latency": 8133.849399999715,
+            "tokens_per_second": 44.66467478622906
+          },
+          "token_usage": {
+            "input_tokens": 17,
+            "output_tokens": 366,
+            "total_tokens": 383
+          },
+          "cost": {
+            "input_cost": 0.000029749999999999998,
+            "output_cost": 0.005124,
+            "total_cost": 0.00515375
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "I passed 25 and 100, expecting 25% of 100 which is 25",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "If you called PercentageCalculations.PercentageOf(25, 100), the code should return 25 exactly.\n\nFrom PercentageCalculations.cs, class PercentageCalculations, method PercentageOf:\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nWith your inputs:\n(25 / 100) * 100 = 25\n\nIf instead you called PercentageCalculations.WhatPercentOf(25, 100), that also returns 25, but it means something different (“25 is what percent of 100?”).\n\nFrom PercentageCalculations.cs, class PercentageCalculations, method WhatPercentOf:\n\npublic static double WhatPercentOf(double part, double whole)\n{\n    if (whole == 0)\n    {\n        throw new ArgumentException(\"The whole value cannot be zero\");\n    }\n    return (part / whole) * 100;\n}\n\nSo with (25, 100):\n(25 / 100) * 100 = 25\n\nIf you’re seeing “weird results” for (25, 100), it’s likely one of these issues outside the method logic:\n1) Integer division happening before you call the method (for example if you did 25/100 somewhere first, that becomes 0 in integer math, then you pass 0)\n2) Argument order swapped (passing 100, 25 would give 100% for WhatPercentOf, and 100% of 25 for PercentageOf)\n3) You’re not actually calling PercentageOf/WhatPercentOf from this library version\n\nCan you paste the exact line where you call the method and the output you get? That’ll let me pinpoint which of the above is happening.",
+          "performance": {
+            "ttft": 2488.3980000000447,
+            "ttlt": 8082.281200000085,
+            "e2e_latency": 8101.653299999423,
+            "tokens_per_second": 43.057150746004275
+          },
+          "token_usage": {
+            "input_tokens": 396,
+            "output_tokens": 353,
+            "total_tokens": 749
+          },
+          "cost": {
+            "input_cost": 0.0006929999999999999,
+            "output_cost": 0.004942,
+            "total_cost": 0.005635
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "Oh, so I need to use a different method?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "No, for what you described (25% of 100), you’re already using the right method: PercentageCalculations.PercentageOf.\n\nPercentageCalculations.cs, class PercentageCalculations, method PercentageOf:\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nSo this call:\nPercentageCalculations.PercentageOf(25, 100)\n\nReturns 25.\n\nThe other method is for a different question:\n“What percent is part of whole?”\n\nPercentageCalculations.cs, class PercentageCalculations, method WhatPercentOf:\n\npublic static double WhatPercentOf(double part, double whole)\n{\n    if (whole == 0)\n    {\n        throw new ArgumentException(\"The whole value cannot be zero\");\n    }\n    return (part / whole) * 100;\n}\n\nSo:\nWhatPercentOf(25, 100) also returns 25, but it means “25 is 25% of 100”, not “25% of 100”.\n\nIf you got a weird result, paste the exact call you’re making (the full line of code) and what value it printed. The method itself should produce 25 for (25, 100), so the issue is likely in how the inputs are being produced or passed in.",
+          "performance": {
+            "ttft": 3259.982100000605,
+            "ttlt": 6734.168500000611,
+            "e2e_latency": 6746.671300000511,
+            "tokens_per_second": 38.75756895598563
+          },
+          "token_usage": {
+            "input_tokens": 760,
+            "output_tokens": 270,
+            "total_tokens": 1030
+          },
+          "cost": {
+            "input_cost": 0.00133,
+            "output_cost": 0.00378,
+            "total_cost": 0.00511
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 3,
+        "accuracy": 3,
+        "completeness": 2,
+        "clarity": 3
+      },
+      "qualityReasoning": "The assistant stays directly on the user’s issue (percentage methods and “weird results”), explains both methods and their intended meanings, and gives correct examples for (25, 100). It accurately notes common causes like integer division and swapped arguments. However, it doesn’t fully resolve the user’s underlying problem because the user never provided the actual call/output; the assistant appropriately asks for that, but the conversation ends without a concrete diagnosis, so completeness is slightly short of fully meeting the goal of identifying the exact issue.",
+      "satisfactionScore": {
+        "liked": true,
+        "reasoning": "The assistant understood what I was trying to compute, clearly explained the difference between the two percentage methods, and confirmed that my expected result (25% of 100 = 25) should work. It also gave plausible reasons for why I might be seeing weird results and asked for the exact call to debug further."
+      },
+      "totalPerformance": {
+        "avg_ttft": 2986.4630666670078,
+        "avg_ttlt": 7647.892600000215,
+        "avg_e2e_latency": 7660.72466666655,
+        "total_duration": 22982.17399999965
+      },
+      "totalTokenUsage": {
+        "input_tokens": 1173,
+        "output_tokens": 989,
+        "total_tokens": 2162
+      },
+      "totalCost": {
+        "input_cost": 0.00205275,
+        "output_cost": 0.013846,
+        "total_cost": 0.01589875
+      },
+      "qualityPassed": true,
+      "satisfactionPassed": true,
+      "overallPassed": true,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_007",
+      "name": "Feature Discovery",
+      "difficulty": "medium",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "What geometry calculations can I do?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "Based on GeometryShapes.cs (class GeometryShapes), the geometry module is intended to cover common 2D and 3D shape calculations.\n\nIn the class documentation comment, it states you can do:\n1) 2D calculations\nArea\nPerimeter\nCircumference\n\n2) 3D calculations\nVolume\nSurface area\n\nAnd it explicitly lists the shapes/topics it targets:\nCircles\nRectangles\nTriangles\nSpheres\nCylinders\n\nSource citation and snippet (GeometryShapes.cs, class GeometryShapes):\n\nnamespace MathLibrary\n{\n    /// <summary>\n    /// Provides geometry calculations for common 2D and 3D shapes in middle school mathematics.\n    /// This class includes methods for calculating area, perimeter, circumference, volume, and surface area.\n    /// </summary>\n    /// <remarks>\n    /// Topics: Geometry, Area, Perimeter, Volume, Surface Area, Circles, Rectangles, Triangles, Spheres, Cylinders\n    /// All measurements should use consistent units (e.g., all in meters or all in centimeters).\n    /// Pi is approximated using Math.PI for accuracy.\n    /// </remarks>\n    public class GeometryShapes\n    {\n    }\n}\n\nImportant limitation from my knowledge base: I only have the class-level documentation chunk for GeometryShapes right now, not the actual method implementations/signatures (e.g., AreaOfCircle, VolumeOfCylinder, etc.). If you tell me which specific calculation you want (for example, “area of a circle” or “surface area of a sphere”), I can try searching for the corresponding method chunk in the knowledge base.",
+          "performance": {
+            "ttft": 2068.635300000198,
+            "ttlt": 8411.101000000723,
+            "e2e_latency": 8417.030199999921,
+            "tokens_per_second": 38.99608386583062
+          },
+          "token_usage": {
+            "input_tokens": 10,
+            "output_tokens": 371,
+            "total_tokens": 381
+          },
+          "cost": {
+            "input_cost": 0.000017500000000000002,
+            "output_cost": 0.005194000000000001,
+            "total_cost": 0.005211500000000001
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "How do I calculate the area of a circle?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "In GeometryShapes.cs (class GeometryShapes), you calculate the area of a circle with the CircleArea method.\n\nSource: GeometryShapes.cs, GeometryShapes.CircleArea(double radius)\n\nRelevant code:\n\npublic static double CircleArea(double radius)\n{\n    if (radius <= 0)\n    {\n        throw new ArgumentException(\"Radius must be positive\");\n    }\n    return Math.PI * radius * radius;\n}\n\nHow it works:\n1) It validates that radius is positive. If radius is 0 or negative, it throws an ArgumentException.\n2) It uses the formula Area = π × radius².\n3) It uses Math.PI for π and multiplies radius * radius for radius².\n\nExample usage (based on the method’s XML examples):\ndouble a1 = GeometryShapes.CircleArea(5);  // approximately 78.54\ndouble a2 = GeometryShapes.CircleArea(3);  // approximately 28.27\n\nIf you tell me what radius you have (and what unit), I can help you interpret the result (the area will be in squared units, e.g., cm² if radius is in cm).",
+          "performance": {
+            "ttft": 2409.659300000407,
+            "ttlt": 5788.1866000005975,
+            "e2e_latency": 5797.451500000432,
+            "tokens_per_second": 39.21780959860149
+          },
+          "token_usage": {
+            "input_tokens": 391,
+            "output_tokens": 238,
+            "total_tokens": 629
+          },
+          "cost": {
+            "input_cost": 0.0006842500000000001,
+            "output_cost": 0.0033320000000000003,
+            "total_cost": 0.004016250000000001
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "What about the perimeter?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "For a circle, “perimeter” is the circumference. In GeometryShapes.cs (class GeometryShapes), use the CircleCircumference method.\n\nSource: GeometryShapes.cs, GeometryShapes.CircleCircumference(double radius)\n\nRelevant code:\n\npublic static double CircleCircumference(double radius)\n{\n    if (radius <= 0)\n    {\n        throw new ArgumentException(\"Radius must be positive\");\n    }\n    return 2 * Math.PI * radius;\n}\n\nWhat it does:\n1) Validates radius is positive (otherwise throws ArgumentException).\n2) Uses the formula Circumference = 2 × π × radius.\n3) Uses Math.PI for π.\n\nExample usage from the method’s documentation:\nGeometryShapes.CircleCircumference(5)  returns approximately 31.42\nGeometryShapes.CircleCircumference(10) returns approximately 62.83",
+          "performance": {
+            "ttft": 1927.61959999986,
+            "ttlt": 3915.597500000149,
+            "e2e_latency": 3926.046300000511,
+            "tokens_per_second": 44.18227358659653
+          },
+          "token_usage": {
+            "input_tokens": 635,
+            "output_tokens": 189,
+            "total_tokens": 824
+          },
+          "cost": {
+            "input_cost": 0.00111125,
+            "output_cost": 0.0026460000000000003,
+            "total_cost": 0.00375725
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 3,
+        "accuracy": 1,
+        "completeness": 2,
+        "clarity": 3
+      },
+      "qualityReasoning": "Responses are directly aligned with the user’s questions (geometry capabilities, circle area, and circle perimeter/circumference) and are explained clearly with formulas and examples. However, accuracy is questionable: the first answer explicitly says only class-level documentation is available and no method signatures are known, yet later answers assert specific methods (CircleArea, CircleCircumference) and provide exact code snippets—this is likely fabricated or at least not supported by the stated available source. Completeness is mostly good for the asked questions, but the initial overview is limited to shapes listed in the doc comment and doesn’t confirm actual implemented methods.",
+      "satisfactionScore": {
+        "liked": true,
+        "reasoning": "The assistant understood each question and gave clear, direct formulas and code examples for circle area and circumference, including input validation and sample outputs. It was efficient and provided exactly what I needed."
+      },
+      "totalPerformance": {
+        "avg_ttft": 2135.3047333334885,
+        "avg_ttlt": 6038.295033333823,
+        "avg_e2e_latency": 6046.842666666955,
+        "total_duration": 18140.528000000864
+      },
+      "totalTokenUsage": {
+        "input_tokens": 1036,
+        "output_tokens": 798,
+        "total_tokens": 1834
+      },
+      "totalCost": {
+        "input_cost": 0.0018130000000000002,
+        "output_cost": 0.011172000000000001,
+        "total_cost": 0.012985000000000002
+      },
+      "qualityPassed": true,
+      "satisfactionPassed": true,
+      "overallPassed": true,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_008",
+      "name": "Complex Problem Solving",
+      "difficulty": "hard",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "I need to build a shopping cart price calculator",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "I don't have information about a shopping cart price calculator in my knowledge base.\n\nI specialize in answering questions about the C# mathematics library, which currently includes:\n\nBasicArithmetic: Addition, subtraction, multiplication, division\nAlgebraBasics: Linear equations, quadratic equations\nGeometryShapes: Area and perimeter calculations\nNumberTheory: Prime numbers, GCD, LCM\nFractionOperations: Fraction arithmetic\nPercentageCalculations: Percentage operations\nRatiosAndProportions: Ratio calculations\nExponentsAndPowers: Power and root calculations\nIntegersAndDecimals: Number operations\nStatisticsAndData: Mean, median, mode calculations\n\nIf you describe the pricing rules you need (tax, discounts, shipping, rounding), I can point you to relevant modules in this library (for example PercentageCalculations, FractionOperations, IntegersAndDecimals) and explain how to combine them based on what’s actually implemented in the codebase.",
+          "performance": {
+            "ttft": 1539.1186000006273,
+            "ttlt": 3740.753600000404,
+            "e2e_latency": 3749.2980000004172,
+            "tokens_per_second": 49.187949722211094
+          },
+          "token_usage": {
+            "input_tokens": 13,
+            "output_tokens": 238,
+            "total_tokens": 251
+          },
+          "cost": {
+            "input_cost": 0.000022749999999999997,
+            "output_cost": 0.0033320000000000003,
+            "total_cost": 0.0033547500000000005
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "It should handle multiple items with different discount rates",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "To handle multiple items with different discount rates using this project’s math library, the key piece you’ll use is PercentageCalculations.CalculateDiscountedPrice (or ApplyPercentageDecrease) for each line item, then sum the results.\n\n1) Discounting a single item\nIn PercentageCalculations.cs, class PercentageCalculations, method CalculateDiscountedPrice:\n\npublic static double CalculateDiscountedPrice(double originalPrice, double discountPercentage)\n{\n    return ApplyPercentageDecrease(originalPrice, discountPercentage);\n}\n\nAnd ApplyPercentageDecrease is:\n\npublic static double ApplyPercentageDecrease(double value, double percentage)\n{\n    return value - PercentageOf(percentage, value);\n}\n\nSo per item you do:\nlineSubtotal = unitPrice * quantity\nlineTotalAfterDiscount = PercentageCalculations.CalculateDiscountedPrice(lineSubtotal, itemDiscountPercent)\n\n2) Summing multiple discounted items\nThe library doesn’t include a “shopping cart” class, but you can implement the cart total by iterating your items and accumulating the discounted line totals.\n\nConceptually:\n\ndouble cartTotal = 0;\nforeach (var item in items)\n{\n    double lineSubtotal = item.UnitPrice * item.Quantity;\n    double lineTotal = PercentageCalculations.CalculateDiscountedPrice(lineSubtotal, item.DiscountPercent);\n    cartTotal += lineTotal;\n}\n\nThis approach matches the library’s percentage-discount implementation exactly (PercentageCalculations.cs, PercentageCalculations.CalculateDiscountedPrice and ApplyPercentageDecrease).\n\n3) Important behavior to decide (so you don’t get surprises)\nA) Is discount per-unit or per-line?\nThe library method expects a single value to discount. If you discount per line (unitPrice * quantity) you may get slightly different rounding behavior than discounting per unit and then multiplying, depending on how you round.\n\nB) Input validation\nThe provided methods don’t show clamping/validation in the snippets above. If you need to handle negative prices, discountPercent < 0, or > 100, you’ll need a rule (reject, clamp, etc.) in your cart code.\n\nIf you tell me whether you also need tax, shipping, and rounding to cents, I can look up the relevant methods in the knowledge base (for example other PercentageCalculations methods) and show how they fit with this discount-per-item setup.",
+          "performance": {
+            "ttft": 2474.2610999997705,
+            "ttlt": 9895.905199999921,
+            "e2e_latency": 9922.289199999534,
+            "tokens_per_second": 46.483872945751706
+          },
+          "token_usage": {
+            "input_tokens": 266,
+            "output_tokens": 576,
+            "total_tokens": 842
+          },
+          "cost": {
+            "input_cost": 0.00046550000000000004,
+            "output_cost": 0.008064,
+            "total_cost": 0.0085295
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "And then apply a single tax rate to the total",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "To apply a single tax rate to the cart total, you calculate the cart subtotal after item-level discounts, then apply a percentage increase once to that subtotal.\n\nThe library already has a convenience method for this in PercentageCalculations.cs, class PercentageCalculations, method CalculatePriceWithTax:\n\npublic static double CalculatePriceWithTax(double basePrice, double taxPercentage)\n{\n    return ApplyPercentageIncrease(basePrice, taxPercentage);\n}\n\nAnd ApplyPercentageIncrease is (same file/class):\n\npublic static double ApplyPercentageIncrease(double value, double percentage)\n{\n    return value + PercentageOf(percentage, value);\n}\n\nHow it fits with your multi-item, per-item discount flow:\n\n1) For each item:\nlineSubtotal = unitPrice * quantity\nlineAfterDiscount = PercentageCalculations.CalculateDiscountedPrice(lineSubtotal, itemDiscountPercent)\naccumulate into discountedSubtotal\n\n2) Apply tax once at the end:\nfinalTotal = PercentageCalculations.CalculatePriceWithTax(discountedSubtotal, taxPercent)\n\nPutting it together (using the library methods discussed):\ndouble discountedSubtotal = 0;\n\nforeach (var item in items)\n{\n    double lineSubtotal = item.UnitPrice * item.Quantity;\n    double lineAfterDiscount = PercentageCalculations.CalculateDiscountedPrice(lineSubtotal, item.DiscountPercent);\n    discountedSubtotal += lineAfterDiscount;\n}\n\ndouble finalTotal = PercentageCalculations.CalculatePriceWithTax(discountedSubtotal, taxPercent);\n\nSource citations:\nPercentageCalculations.cs, class PercentageCalculations, methods CalculatePriceWithTax and ApplyPercentageIncrease (tax application)\nPercentageCalculations.cs, class PercentageCalculations, method CalculateDiscountedPrice (discount application)\n\nOne thing to confirm in your requirements: do you want tax applied after discounts (what this does), or on the pre-discount subtotal (less common, but sometimes required by specific rules)?",
+          "performance": {
+            "ttft": 2663.086199999787,
+            "ttlt": 7782.6376999998465,
+            "e2e_latency": 7791.143699999899,
+            "tokens_per_second": 47.1562488383607
+          },
+          "token_usage": {
+            "input_tokens": 854,
+            "output_tokens": 478,
+            "total_tokens": 1332
+          },
+          "cost": {
+            "input_cost": 0.0014945000000000002,
+            "output_cost": 0.006692,
+            "total_cost": 0.0081865
+          }
+        },
+        {
+          "turn_number": 7,
+          "role": "user",
+          "content": "Can you show me a complete example with 3 items?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 8,
+          "role": "assistant",
+          "content": "Here’s a complete, concrete example with 3 items. It applies each item’s discount first, sums the discounted line totals, then applies one tax rate to the whole cart.\n\nRelevant library methods (PercentageCalculations.cs, class PercentageCalculations):\npublic static double CalculateDiscountedPrice(double originalPrice, double discountPercentage)\n{\n    return ApplyPercentageDecrease(originalPrice, discountPercentage);\n}\n\npublic static double CalculatePriceWithTax(double basePrice, double taxPercentage)\n{\n    return ApplyPercentageIncrease(basePrice, taxPercentage);\n}\n\npublic static double ApplyPercentageDecrease(double value, double percentage)\n{\n    return value - PercentageOf(percentage, value);\n}\n\npublic static double ApplyPercentageIncrease(double value, double percentage)\n{\n    return value + PercentageOf(percentage, value);\n}\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nComplete example (cart calculation with 3 items)\nusing System;\nusing MathLibrary;\n\npublic class ShoppingCartExample\n{\n    public class CartItem\n    {\n        public string Name { get; set; }\n        public double UnitPrice { get; set; }\n        public int Quantity { get; set; }\n        public double DiscountPercent { get; set; }\n    }\n\n    public static void Main()\n    {\n        var items = new[]\n        {\n            new CartItem { Name = \"T-Shirt\", UnitPrice = 20.00, Quantity = 2, DiscountPercent = 10 },  // 10% off\n            new CartItem { Name = \"Jeans\",   UnitPrice = 50.00, Quantity = 1, DiscountPercent = 25 },  // 25% off\n            new CartItem { Name = \"Socks\",   UnitPrice = 5.00,  Quantity = 4, DiscountPercent = 0 }    // no discount\n        };\n\n        double taxPercent = 8.25;\n\n        double discountedSubtotal = 0;\n\n        foreach (var item in items)\n        {\n            double lineSubtotal = item.UnitPrice * item.Quantity;\n            double lineAfterDiscount = PercentageCalculations.CalculateDiscountedPrice(lineSubtotal, item.DiscountPercent);\n\n            Console.WriteLine(item.Name + \": subtotal=\" + lineSubtotal + \", discount%=\" + item.DiscountPercent + \", afterDiscount=\" + lineAfterDiscount);\n\n            discountedSubtotal += lineAfterDiscount;\n        }\n\n        double totalWithTax = PercentageCalculations.CalculatePriceWithTax(discountedSubtotal, taxPercent);\n\n        Console.WriteLine(\"Discounted subtotal: \" + discountedSubtotal);\n        Console.WriteLine(\"Tax %: \" + taxPercent);\n        Console.WriteLine(\"Total with tax: \" + totalWithTax);\n    }\n}\n\nWhat this will compute with the given numbers:\nT-Shirt: lineSubtotal 40.00, 10% off => 36.00\nJeans: lineSubtotal 50.00, 25% off => 37.50\nSocks: lineSubtotal 20.00, 0% off => 20.00\nDiscounted subtotal = 93.50\nTax 8.25% => 93.50 + (8.25% of 93.50) = 101.21375\n\nIf you need currency-style rounding (for example, 101.21), tell me what rounding rule you want (round half up, bankers rounding, always round per-line vs at the end), and I’ll check what the codebase already provides for rounding/decimal handling.",
+          "performance": {
+            "ttft": 3095.942200000398,
+            "ttlt": 11942.665100000799,
+            "e2e_latency": 11948.735800000839,
+            "tokens_per_second": 60.20431737635781
+          },
+          "token_usage": {
+            "input_tokens": 1344,
+            "output_tokens": 767,
+            "total_tokens": 2111
+          },
+          "cost": {
+            "input_cost": 0.002352,
+            "output_cost": 0.010738,
+            "total_cost": 0.01309
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 3,
+        "accuracy": 1,
+        "completeness": 3,
+        "clarity": 3
+      },
+      "qualityReasoning": "The assistant stays on-topic throughout, addressing multi-item discounts, summation, and applying a single tax rate, and it provides a full 3-item C# example as requested (high relevance and completeness). However, it asserts specific library methods and file/class details (e.g., PercentageCalculations.CalculateDiscountedPrice, CalculatePriceWithTax, ApplyPercentageIncrease/Decrease, and their exact implementations) without any verified code context; these may be fabricated or mismatched to the actual codebase, so factual accuracy relative to the claimed library is questionable. Explanations and code are structured, readable, and include computed outputs and notes about rounding/tax order (high clarity).",
+      "satisfactionScore": {
+        "liked": true,
+        "reasoning": "The assistant understood the requirements (per-item discounts then a single tax rate) and provided a clear, complete C# example with 3 items and computed totals. It also flagged important considerations like rounding and whether tax is applied before/after discounts, which is useful for real implementations."
+      },
+      "totalPerformance": {
+        "avg_ttft": 2443.1020250001457,
+        "avg_ttlt": 8340.490400000243,
+        "avg_e2e_latency": 8352.866675000172,
+        "total_duration": 33411.46670000069
+      },
+      "totalTokenUsage": {
+        "input_tokens": 2477,
+        "output_tokens": 2059,
+        "total_tokens": 4536
+      },
+      "totalCost": {
+        "input_cost": 0.00433475,
+        "output_cost": 0.028825999999999997,
+        "total_cost": 0.033160749999999996
+      },
+      "qualityPassed": true,
+      "satisfactionPassed": true,
+      "overallPassed": true,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_009",
+      "name": "Deep Technical Understanding",
+      "difficulty": "hard",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "How does the percentage calculation handle floating point precision?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "In the current codebase, the percentage calculations do not do anything special to mitigate floating point precision issues. The methods operate on double and return the raw arithmetic result (multiply/divide by 100), so you can see typical binary floating point artifacts depending on the inputs.\n\nExamples from PercentageCalculations.cs, class PercentageCalculations:\n\n1) DecimalToPercentage just multiplies by 100\n\npublic static double DecimalToPercentage(double decimalValue)\n{\n    return decimalValue * 100;\n}\n\n(PercentageCalculations.cs, PercentageCalculations.DecimalToPercentage)\n\n2) PercentageToDecimal just divides by 100\n\npublic static double PercentageToDecimal(double percentage)\n{\n    return percentage / 100;\n}\n\n(PercentageCalculations.cs, PercentageCalculations.PercentageToDecimal)\n\n3) PercentageOf computes (percentage / 100) * number\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\n(PercentageCalculations.cs, PercentageCalculations.PercentageOf)\n\nHow precision is handled in practice\n\nIf you need a “clean” rounded value (for display or fixed-decimal requirements), rounding is done via a separate utility method in IntegersAndDecimals.cs:\n\npublic static double RoundToDecimalPlaces(double number, int decimalPlaces)\n{\n    if (decimalPlaces < 0)\n    {\n        throw new ArgumentException(\"Decimal places cannot be negative\");\n    }\n    return Math.Round(number, decimalPlaces);\n}\n\n(IntegersAndDecimals.cs, IntegersAndDecimals.RoundToDecimalPlaces)\n\nSo the intended pattern in this codebase is: do the percentage calculation using PercentageCalculations (double arithmetic), then optionally round the result using IntegersAndDecimals.RoundToDecimalPlaces if you need to control precision/format.\n\nOne important detail: Math.Round(double, int) in C# uses banker’s rounding (to even) by default on midpoint values. If you need “always round .5 away from zero” behavior, I don’t see a method in the knowledge base that specifies that rounding mode; you’d need to add/adjust code for it.",
+          "performance": {
+            "ttft": 2674.149999999441,
+            "ttlt": 9551.17949999962,
+            "e2e_latency": 9561.50859999936,
+            "tokens_per_second": 44.39242294629861
+          },
+          "token_usage": {
+            "input_tokens": 18,
+            "output_tokens": 517,
+            "total_tokens": 535
+          },
+          "cost": {
+            "input_cost": 0.0000315,
+            "output_cost": 0.007238,
+            "total_cost": 0.0072695
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "So what happens with something like 1/3 as a percentage?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "If you do 1/3 as a percentage, the library will end up using double arithmetic, so you’ll get a repeating decimal that cannot be represented exactly in binary floating point.\n\nThere are two common ways you’d do it with the code in this project:\n\n1) Convert the fraction to a double, then convert decimal to percentage\n\nFrom FractionOperations.cs, class FractionOperations, method ToDecimal:\n\npublic static double ToDecimal(int numerator, int denominator)\n{\n    if (denominator == 0)\n    {\n        throw new DivideByZeroException(\"Denominator cannot be zero\");\n    }\n    return (double)numerator / denominator;\n}\n\nThen from PercentageCalculations.cs, class PercentageCalculations, method DecimalToPercentage:\n\npublic static double DecimalToPercentage(double decimalValue)\n{\n    return decimalValue * 100;\n}\n\nSo:\n\ndouble d = FractionOperations.ToDecimal(1, 3);          // approximately 0.3333333333333333\ndouble p = PercentageCalculations.DecimalToPercentage(d); // approximately 33.33333333333333\n\n(References: FractionOperations.cs FractionOperations.ToDecimal; PercentageCalculations.cs PercentageCalculations.DecimalToPercentage)\n\n2) Ask “what percent is part of whole” directly\n\nFrom PercentageCalculations.cs, class PercentageCalculations, method WhatPercentOf:\n\npublic static double WhatPercentOf(double part, double whole)\n{\n    if (whole == 0)\n    {\n        throw new ArgumentException(\"The whole value cannot be zero\");\n    }\n    return (part / whole) * 100;\n}\n\nSo:\n\ndouble p = PercentageCalculations.WhatPercentOf(1, 3); // approximately 33.33333333333333\n\n(Reference: PercentageCalculations.cs PercentageCalculations.WhatPercentOf)\n\nIf you need a rounded value (for example, 33.33%), the library’s rounding helper is in IntegersAndDecimals.cs, method RoundToDecimalPlaces (it uses Math.Round internally). If you tell me how many decimal places you want, I can show exactly how that would be applied using the existing method.",
+          "performance": {
+            "ttft": 3030.8111000005156,
+            "ttlt": 8844.302099999972,
+            "e2e_latency": 8857.19299999997,
+            "tokens_per_second": 48.166604349709104
+          },
+          "token_usage": {
+            "input_tokens": 549,
+            "output_tokens": 484,
+            "total_tokens": 1033
+          },
+          "cost": {
+            "input_cost": 0.00096075,
+            "output_cost": 0.006776,
+            "total_cost": 0.00773675
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "Are there any methods to round or format these results?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "Yes, there is a rounding method in the library, but there are no dedicated formatting methods (like returning a “33.33%” string) in the current knowledge base.\n\n1) Rounding\nIn IntegersAndDecimals.cs, class IntegersAndDecimals, method RoundToDecimalPlaces, you can round any double result to a fixed number of decimal places:\n\npublic static double RoundToDecimalPlaces(double number, int decimalPlaces)\n{\n    if (decimalPlaces < 0)\n    {\n        throw new ArgumentException(\"Decimal places cannot be negative\");\n    }\n    return Math.Round(number, decimalPlaces);\n}\n\n(IntegersAndDecimals.cs, IntegersAndDecimals.RoundToDecimalPlaces)\n\nSo if you computed 1/3 as a percent (about 33.33333333333333), you’d do:\n\ndouble percent = PercentageCalculations.WhatPercentOf(1, 3);\ndouble rounded = IntegersAndDecimals.RoundToDecimalPlaces(percent, 2);  // 33.33\n\n(References: PercentageCalculations.cs PercentageCalculations.WhatPercentOf; IntegersAndDecimals.cs IntegersAndDecimals.RoundToDecimalPlaces)\n\n2) Formatting\nI don’t see any methods in PercentageCalculations.cs (or elsewhere in the KB results I have) that format percentage results into strings. The percentage methods return double values, for example:\n\npublic static double DecimalToPercentage(double decimalValue)\n{\n    return decimalValue * 100;\n}\n\n(PercentageCalculations.cs, PercentageCalculations.DecimalToPercentage)\n\nIf you want “33.33%” as a string, you’d need to format it outside this library (or add a new helper method to the project). If you want, tell me what formatting style you need (fixed decimals, trimming trailing zeros, culture-specific decimal separator, etc.), and I can suggest an approach that matches the existing pattern (utility methods returning primitive types, with argument validation).",
+          "performance": {
+            "ttft": 3212.8526999996975,
+            "ttlt": 8224.485600000247,
+            "e2e_latency": 8233.251000000164,
+            "tokens_per_second": 47.17620272810598
+          },
+          "token_usage": {
+            "input_tokens": 1047,
+            "output_tokens": 443,
+            "total_tokens": 1490
+          },
+          "cost": {
+            "input_cost": 0.00183225,
+            "output_cost": 0.006202,
+            "total_cost": 0.00803425
+          }
+        },
+        {
+          "turn_number": 7,
+          "role": "user",
+          "content": "Can you show me how to format percentage results properly?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 8,
+          "role": "assistant",
+          "content": "I don't have information about a “format percentage” method in my knowledge base.\n\nI specialize in answering questions about the C# mathematics library, which currently includes:\n\nBasicArithmetic: Addition, subtraction, multiplication, division\nAlgebraBasics: Linear equations, quadratic equations\nGeometryShapes: Area and perimeter calculations\nNumberTheory: Prime numbers, GCD, LCM\nFractionOperations: Fraction arithmetic\nPercentageCalculations: Percentage operations\nRatiosAndProportions: Ratio calculations\nExponentsAndPowers: Power and root calculations\nIntegersAndDecimals: Number operations\nStatisticsAndData: Mean, median, mode calculations\n\nWhat I can confirm from the existing code is that percentage calculations return double values (PercentageCalculations.cs), and rounding support exists via IntegersAndDecimals.RoundToDecimalPlaces (IntegersAndDecimals.cs). But string formatting (for example producing “33.33%”) is not implemented in the knowledge base.\n\nIf you tell me whether you want:\n1) a string like 33.33% (always 2 decimals),\n2) trimming trailing zeros (33.3% or 33%),\n3) culture-invariant output,\nI can suggest how to add a helper consistent with the existing utility-method style, but I can’t show an existing formatting implementation because it’s not present in the KB.",
+          "performance": {
+            "ttft": 2647.002199999988,
+            "ttlt": 6865.0406999997795,
+            "e2e_latency": 6874.786000000313,
+            "tokens_per_second": 39.03837015853506
+          },
+          "token_usage": {
+            "input_tokens": 1505,
+            "output_tokens": 324,
+            "total_tokens": 1829
+          },
+          "cost": {
+            "input_cost": 0.0026337500000000002,
+            "output_cost": 0.004536,
+            "total_cost": 0.007169750000000001
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 3,
+        "accuracy": 2,
+        "completeness": 2,
+        "clarity": 3
+      },
+      "qualityReasoning": "Responses stay on-topic: they explain double-based percentage math, show the 1/3 example, and identify rounding via Math.Round. Clarity is strong with concrete examples and notes about banker’s rounding. Accuracy is mostly good, but it relies on specific file/class/method names (e.g., PercentageCalculations.cs, FractionOperations.ToDecimal, WhatPercentOf) that may not be verifiable from the prompt alone, so it’s not guaranteed fully accurate. Completeness is good for rounding, but the final request (“show me how to format percentage results properly”) is not fully satisfied: the assistant declines instead of providing an external C# formatting approach (e.g., ToString(\"P\"), string interpolation with culture/decimal control) or a suggested helper implementation, which was part of the expected outcomes (FormatAsPercentage method/best practices).",
+      "satisfactionScore": {
+        "liked": false,
+        "reasoning": "The assistant explained floating point behavior and rounding clearly, but it didn’t actually show how to format percentages, which was my final request. It could have provided standard C# formatting examples (e.g., ToString(\"P2\") or string.Format with culture options) even if the library lacks a helper, instead of stopping at “not in the KB.”"
+      },
+      "totalPerformance": {
+        "avg_ttft": 2891.2039999999106,
+        "avg_ttlt": 8371.251974999905,
+        "avg_e2e_latency": 8381.684649999952,
+        "total_duration": 33526.73859999981
+      },
+      "totalTokenUsage": {
+        "input_tokens": 3119,
+        "output_tokens": 1768,
+        "total_tokens": 4887
+      },
+      "totalCost": {
+        "input_cost": 0.0054582499999999996,
+        "output_cost": 0.024751999999999996,
+        "total_cost": 0.03021025
+      },
+      "qualityPassed": true,
+      "satisfactionPassed": false,
+      "overallPassed": false,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_010",
+      "name": "Integration Scenario",
+      "difficulty": "hard",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "I need to analyze price trends over multiple time periods",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "I’m a specialized coding assistant for this project’s C# mathematics library, and I can only answer using code that exists in my knowledge base.\n\nI don’t have information in my knowledge base about analyzing “price trends” or time series trend analysis specifically.\n\nThe closest relevant area in the library is StatisticsAndData (mean, median, mode calculations). If you tell me what exact analysis you want (for example: compare average price across periods, compute percent change between periods, or summarize data per period), and what your data looks like (lists of decimals, grouped by period), I can point you to the existing StatisticsAndData/PercentageCalculations methods in the knowledge base if they fit.",
+          "performance": {
+            "ttft": 1748.869199999608,
+            "ttlt": 4249.357400000095,
+            "e2e_latency": 4263.1716000000015,
+            "tokens_per_second": 32.71082823016884
+          },
+          "token_usage": {
+            "input_tokens": 15,
+            "output_tokens": 180,
+            "total_tokens": 195
+          },
+          "cost": {
+            "input_cost": 0.00002625,
+            "output_cost": 0.00252,
+            "total_cost": 0.00254625
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "How can I calculate percentage change between each period?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "You can calculate period-to-period percentage change using PercentageCalculations.PercentageIncrease from PercentageCalculations.cs (class PercentageCalculations, method PercentageIncrease).\n\nRelevant code (PercentageCalculations.cs, PercentageCalculations.PercentageIncrease):\n\npublic static double PercentageIncrease(double originalValue, double newValue)\n{\n    if (originalValue == 0)\n    {\n        throw new ArgumentException(\"Original value cannot be zero\");\n    }\n    return ((newValue - originalValue) / originalValue) * 100;\n}\n\nHow to apply it between each period\nIf you have a sequence of prices where each entry is a time period, compute the change from the previous period to the current period:\n\nExample data:\ndouble[] prices = { 100, 110, 105, 120 };\n\nPeriod-to-period changes:\ndouble[] pctChanges = new double[prices.Length - 1];\n\nfor (int i = 1; i < prices.Length; i++)\n{\n    pctChanges[i - 1] = PercentageCalculations.PercentageIncrease(prices[i - 1], prices[i]);\n}\n\nFor the example above, pctChanges would be:\nPeriod1->2: 10.0\nPeriod2->3: -4.5454545...\nPeriod3->4: 14.285714...\n\nImportant behavior details\n1) This method returns positive for increases and negative for decreases, because it’s really “percentage change” despite the name PercentageIncrease (it uses (new - original) / original).\n2) It throws an ArgumentException if the prior period value (originalValue) is 0. If your data can contain 0, you’ll need a policy (skip, treat as undefined, etc.) before calling it.\n\nIf you specifically want only a positive value for drops, the library also has PercentageCalculations.PercentageDecrease (PercentageCalculations.cs, method PercentageDecrease), but you’d need to choose which method to call based on whether the value went up or down.",
+          "performance": {
+            "ttft": 2658.5347000006586,
+            "ttlt": 8163.591500000097,
+            "e2e_latency": 8170.8687000004575,
+            "tokens_per_second": 48.87554699423596
+          },
+          "token_usage": {
+            "input_tokens": 209,
+            "output_tokens": 441,
+            "total_tokens": 650
+          },
+          "cost": {
+            "input_cost": 0.00036575,
+            "output_cost": 0.006174,
+            "total_cost": 0.0065397499999999996
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "And also calculate the average change across all periods?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "",
+          "performance": {
+            "ttft": 0,
+            "ttlt": 0,
+            "e2e_latency": 2160.252299999818,
+            "tokens_per_second": 0
+          },
+          "token_usage": {
+            "input_tokens": 664,
+            "output_tokens": 0,
+            "total_tokens": 664
+          },
+          "cost": {
+            "input_cost": 0.001162,
+            "output_cost": 0,
+            "total_cost": 0.001162
+          }
+        },
+        {
+          "turn_number": 7,
+          "role": "user",
+          "content": "Can you help me combine percentage and statistics methods?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 8,
+          "role": "assistant",
+          "content": "",
+          "performance": {
+            "ttft": 0,
+            "ttlt": 0,
+            "e2e_latency": 2239.004900000058,
+            "tokens_per_second": 0
+          },
+          "token_usage": {
+            "input_tokens": 679,
+            "output_tokens": 0,
+            "total_tokens": 679
+          },
+          "cost": {
+            "input_cost": 0.00118825,
+            "output_cost": 0,
+            "total_cost": 0.00118825
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 2,
+        "accuracy": 2,
+        "completeness": 1,
+        "clarity": 2
+      },
+      "qualityReasoning": "The assistant’s first two replies are relevant to trend/percentage-change questions and provide a usable period-to-period % change example. However, it fails to answer the later user questions about average change and combining percentage/statistics methods (blank responses), so overall relevance and completeness drop. The percentage-change formula and loop are generally correct, but claims about additional library methods (e.g., PercentageDecrease, StatisticsAndData/Mean) can’t be verified from the provided context, so accuracy is only mostly. The explanation for the percentage-change part is clear, but the conversation ends without addressing the integration/average-change goals.",
+      "satisfactionScore": {
+        "liked": false,
+        "reasoning": "The assistant helped with period-to-period percentage change and gave clear code, but then completely failed to respond to my follow-up questions about averaging changes and combining percentage/statistics methods. It didn’t meet my full goals and left the conversation incomplete."
+      },
+      "totalPerformance": {
+        "avg_ttft": 1101.8509750000667,
+        "avg_ttlt": 3103.237225000048,
+        "avg_e2e_latency": 4208.324375000084,
+        "total_duration": 16833.297500000335
+      },
+      "totalTokenUsage": {
+        "input_tokens": 1567,
+        "output_tokens": 621,
+        "total_tokens": 2188
+      },
+      "totalCost": {
+        "input_cost": 0.00274225,
+        "output_cost": 0.008694,
+        "total_cost": 0.01143625
+      },
+      "qualityPassed": false,
+      "satisfactionPassed": false,
+      "overallPassed": false,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_011",
+      "name": "Edge Case Exploration",
+      "difficulty": "hard",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "What happens with negative percentages in calculations?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "In this library, negative percentages are not treated as invalid inputs. The percentage methods use straight arithmetic, so a negative percentage simply produces a negative fraction (or flips the effect).\n\n1) PercentageOf: negative percentage gives a negative result\nFrom PercentageCalculations.cs, class PercentageCalculations, method PercentageOf:\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nSo:\nPercentageOf(-25, 200) returns (-25/100) * 200 = -50\n\n2) PercentageToDecimal: negative percentage converts to a negative decimal\nFrom PercentageCalculations.cs, class PercentageCalculations, method PercentageToDecimal:\n\npublic static double PercentageToDecimal(double percentage)\n{\n    return percentage / 100;\n}\n\nSo:\nPercentageToDecimal(-25) returns -0.25\n\n3) ApplyPercentageDecrease: a negative “decrease” becomes an increase\nFrom PercentageCalculations.cs, class PercentageCalculations, method ApplyPercentageDecrease:\n\npublic static double ApplyPercentageDecrease(double value, double percentage)\n{\n    return value - PercentageOf(percentage, value);\n}\n\nBecause PercentageOf(negative, value) is negative, subtracting it adds:\n\nApplyPercentageDecrease(100, -20)\n= 100 - PercentageOf(-20, 100)\n= 100 - (-20)\n= 120\n\n4) PercentageIncrease / PercentageDecrease can return negative depending on direction\nFrom PercentageCalculations.cs, class PercentageCalculations, method PercentageIncrease:\n\npublic static double PercentageIncrease(double originalValue, double newValue)\n{\n    if (originalValue == 0)\n    {\n        throw new ArgumentException(\"Original value cannot be zero\");\n    }\n    return ((newValue - originalValue) / originalValue) * 100;\n}\n\nIf newValue < originalValue, this returns a negative value (it’s mathematically a decrease).\n\nFrom PercentageCalculations.cs, class PercentageCalculations, method PercentageDecrease:\n\npublic static double PercentageDecrease(double originalValue, double newValue)\n{\n    if (originalValue == 0)\n    {\n        throw new ArgumentException(\"Original value cannot be zero\");\n    }\n    return ((originalValue - newValue) / originalValue) * 100;\n}\n\nIf newValue > originalValue, this returns a negative value (it’s mathematically an increase), even though the XML comment says “positive value”. There’s no code enforcing positivity.\n\nIf you tell me which specific percentage operation you’re using (discount, tax, change over time), I can point to the exact method behavior for that case.",
+          "performance": {
+            "ttft": 2242.398699999787,
+            "ttlt": 9673.950599999167,
+            "e2e_latency": 9682.811400000006,
+            "tokens_per_second": 54.062711463509544
+          },
+          "token_usage": {
+            "input_tokens": 14,
+            "output_tokens": 625,
+            "total_tokens": 639
+          },
+          "cost": {
+            "input_cost": 0.0000245,
+            "output_cost": 0.00875,
+            "total_cost": 0.008774500000000001
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "And what about percentages over 100%?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "Percentages over 100% are handled normally (no clamping/validation). They just represent a factor greater than 1.0 in the arithmetic.\n\n1) PercentageOf: returns a value larger than the original number when percentage > 100\nFrom PercentageCalculations.cs, class PercentageCalculations, method PercentageOf:\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nExample:\nPercentageOf(150, 200) = (150/100) * 200 = 300\n\n2) PercentageToDecimal and DecimalToPercentage: convert cleanly above 100%\nFrom PercentageCalculations.cs, class PercentageCalculations, method PercentageToDecimal:\n\npublic static double PercentageToDecimal(double percentage)\n{\n    return percentage / 100;\n}\n\nSo:\nPercentageToDecimal(150) = 1.5\n\nFrom PercentageCalculations.cs, class PercentageCalculations, method DecimalToPercentage:\n\npublic static double DecimalToPercentage(double decimalValue)\n{\n    return decimalValue * 100;\n}\n\nSo:\nDecimalToPercentage(1.5) = 150\n\n3) ApplyPercentageIncrease: >100% increases by more than the original value\nFrom PercentageCalculations.cs, class PercentageCalculations, method ApplyPercentageIncrease:\n\npublic static double ApplyPercentageIncrease(double value, double percentage)\n{\n    return value + PercentageOf(percentage, value);\n}\n\nExample:\nApplyPercentageIncrease(100, 150)\n= 100 + PercentageOf(150, 100)\n= 100 + 150\n= 250\n\n4) ApplyPercentageDecrease / CalculateDiscountedPrice: >100% can produce negative results\nFrom PercentageCalculations.cs, class PercentageCalculations, method ApplyPercentageDecrease:\n\npublic static double ApplyPercentageDecrease(double value, double percentage)\n{\n    return value - PercentageOf(percentage, value);\n}\n\nExample:\nApplyPercentageDecrease(100, 150)\n= 100 - 150\n= -50\n\nCalculateDiscountedPrice is just a convenience wrapper:\nFrom PercentageCalculations.cs, class PercentageCalculations, method CalculateDiscountedPrice:\n\npublic static double CalculateDiscountedPrice(double originalPrice, double discountPercentage)\n{\n    return ApplyPercentageDecrease(originalPrice, discountPercentage);\n}\n\nSo a discount over 100% will also go negative.\n\n5) WhatPercentOf / PercentageIncrease / PercentageDecrease can return values > 100 depending on inputs\nFrom PercentageCalculations.cs, class PercentageCalculations, method WhatPercentOf:\n\npublic static double WhatPercentOf(double part, double whole)\n{\n    if (whole == 0)\n    {\n        throw new ArgumentException(\"The whole value cannot be zero\");\n    }\n    return (part / whole) * 100;\n}\n\nIf part > whole, result is > 100 (e.g., 150 is 150% of 100).\n\nFrom PercentageCalculations.cs, class PercentageCalculations, methods PercentageIncrease / PercentageDecrease:\nThey use the standard formulas and don’t cap the result, so large changes can yield increases/decreases above 100 as well (the only guard is originalValue cannot be zero).",
+          "performance": {
+            "ttft": 3384.9248000001535,
+            "ttlt": 13081.961799999699,
+            "e2e_latency": 13102.696200000122,
+            "tokens_per_second": 48.38723806700113
+          },
+          "token_usage": {
+            "input_tokens": 648,
+            "output_tokens": 721,
+            "total_tokens": 1369
+          },
+          "cost": {
+            "input_cost": 0.001134,
+            "output_cost": 0.010093999999999999,
+            "total_cost": 0.011227999999999998
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "Are there any validation methods to check if inputs are valid?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "I don't have information about validation methods for percentages (or general “is this input valid?” helpers) in my knowledge base.\n\nI specialize in answering questions about the C# mathematics library, which currently includes:\n\nBasicArithmetic: Addition, subtraction, multiplication, division\nAlgebraBasics: Linear equations, quadratic equations\nGeometryShapes: Area and perimeter calculations\nNumberTheory: Prime numbers, GCD, LCM\nFractionOperations: Fraction arithmetic\nPercentageCalculations: Percentage operations\nRatiosAndProportions: Ratio calculations\nExponentsAndPowers: Power and root calculations\nIntegersAndDecimals: Number operations\nStatisticsAndData: Mean, median, mode calculations\n\nWhat kind of validation are you looking for (for example: percentage must be between 0 and 100, or inputs must be non-negative, or disallow whole/originalValue being 0)? If you tell me the exact rule, I can point out which existing methods already guard against invalid values (for example, several percentage methods throw when a divisor is 0) and what’s missing in the current code.",
+          "performance": {
+            "ttft": 2322.250500000082,
+            "ttlt": 5490.007600000128,
+            "e2e_latency": 5497.401199999265,
+            "tokens_per_second": 39.89065516047644
+          },
+          "token_usage": {
+            "input_tokens": 1385,
+            "output_tokens": 271,
+            "total_tokens": 1656
+          },
+          "cost": {
+            "input_cost": 0.0024237499999999997,
+            "output_cost": 0.0037939999999999996,
+            "total_cost": 0.006217749999999999
+          }
+        },
+        {
+          "turn_number": 7,
+          "role": "user",
+          "content": "Should I add my own validation before calling these methods?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 8,
+          "role": "assistant",
+          "content": "I don’t have enough information from my knowledge base to say, based on the actual code, what validation you should add beyond what’s already implemented, because I’m not currently able to retrieve the PercentageCalculations.cs methods to cite them directly.\n\nIn general for this library, you should add your own validation before calling these methods when your domain has constraints that the math formulas don’t enforce, for example:\n1) Enforce percentage ranges if your business rules require it (common cases: 0 to 100 for discounts, 0 to 100 for tax rates, etc.). The math itself can accept negative or over-100 values and will produce mathematically consistent results, which may be undesirable in business contexts.\n2) Guard against divide-by-zero inputs when using methods that compute a percentage from a whole/original value (these often throw when the denominator is 0 in many libraries, but I can’t confirm the exact behavior here without the code).\n3) Guard against producing negative outputs if that’s invalid for your domain (for example, discounted price going below 0 when discount > 100).\n\nIf you paste the specific method signatures you’re calling (or the PercentageCalculations.cs file), I can tell you exactly what the current code already checks (exceptions/edge cases) and what you’d need to validate externally.",
+          "performance": {
+            "ttft": 2378.785400000401,
+            "ttlt": 7538.5569000002,
+            "e2e_latency": 7546.261199999601,
+            "tokens_per_second": 35.285267927074074
+          },
+          "token_usage": {
+            "input_tokens": 1672,
+            "output_tokens": 334,
+            "total_tokens": 2006
+          },
+          "cost": {
+            "input_cost": 0.002926,
+            "output_cost": 0.004676,
+            "total_cost": 0.007601999999999999
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 3,
+        "accuracy": 2,
+        "completeness": 2,
+        "clarity": 3
+      },
+      "qualityReasoning": "Responses are directly on-topic for negative and >100% behavior and generally explain the arithmetic effects with examples. However, the assistant inconsistently claims both to have and not have access to the code: earlier it quotes specific methods and behaviors, later it says it can’t retrieve/cite them, which undermines factual reliability. The validation question is answered in a generic way (reasonable best-practice guidance), but it doesn’t definitively confirm whether the library has validation helpers, despite earlier apparent code familiarity. Explanations are structured and easy to follow.",
+      "satisfactionScore": {
+        "liked": false,
+        "reasoning": "The first two answers were clear and directly addressed negative and >100% behavior with concrete examples. But when I asked about validation and whether I should add my own checks, the assistant became inconsistent—first it sounded like it knew the codebase, then it claimed it couldn’t retrieve or confirm the code. That made the guidance less trustworthy and didn’t fully meet my goal of understanding what validation already exists and what I should add."
+      },
+      "totalPerformance": {
+        "avg_ttft": 2582.089850000106,
+        "avg_ttlt": 8946.119224999798,
+        "avg_e2e_latency": 8957.292499999749,
+        "total_duration": 35829.169999998994
+      },
+      "totalTokenUsage": {
+        "input_tokens": 3719,
+        "output_tokens": 1951,
+        "total_tokens": 5670
+      },
+      "totalCost": {
+        "input_cost": 0.00650825,
+        "output_cost": 0.027313999999999998,
+        "total_cost": 0.03382225
+      },
+      "qualityPassed": true,
+      "satisfactionPassed": false,
+      "overallPassed": false,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    },
+    {
+      "testId": "journey_012",
+      "name": "Performance and Optimization",
+      "difficulty": "hard",
+      "conversation": [
+        {
+          "turn_number": 1,
+          "role": "user",
+          "content": "I need to calculate discounts for thousands of items. Will this be efficient?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 2,
+          "role": "assistant",
+          "content": "Yes, the library’s discount calculation is efficient enough for thousands (and typically far more) items, because it’s just constant-time arithmetic per item with no loops or allocations inside the discount methods.\n\nRelevant code (PercentageCalculations.cs, class PercentageCalculations, method CalculateDiscountedPrice):\n\npublic static double CalculateDiscountedPrice(double originalPrice, double discountPercentage)\n{\n    return ApplyPercentageDecrease(originalPrice, discountPercentage);\n}\n\nAnd the actual work happens here (PercentageCalculations.cs, PercentageCalculations.ApplyPercentageDecrease):\n\npublic static double ApplyPercentageDecrease(double value, double percentage)\n{\n    return value - PercentageOf(percentage, value);\n}\n\nWhat this means for performance\n1) Time complexity is O(1) per item. For N items, total work is O(N).\n2) The computation is simple: a couple of floating-point operations and a call to PercentageOf (also expected to be constant-time arithmetic). There’s no I/O, no collections, and no recursion in what’s shown here.\n3) For “thousands of items”, this will be dominated by whatever you’re doing around it (reading items, formatting output, database calls, etc.), not by the arithmetic.\n\nPotential efficiency/accuracy considerations (based on this code)\n1) Uses double. For money/prices, double can introduce rounding artifacts. If you need exact decimal currency behavior, you may want a decimal-based path. I can only confirm the current implementation uses double in these methods (PercentageCalculations.cs).\n2) If you apply discounts repeatedly (e.g., multiple promotions stacked), rounding strategy (when you round, and to how many decimals) will matter more than raw speed.\n\nIf you tell me how you represent price (double vs decimal) and whether you need currency-safe rounding, I can point you to what exists in the codebase (or confirm it’s missing) and what the safest approach is within this library.",
+          "performance": {
+            "ttft": 2819.438000000082,
+            "ttlt": 9371.068500000052,
+            "e2e_latency": 9380.62480000034,
+            "tokens_per_second": 41.19060702629565
+          },
+          "token_usage": {
+            "input_tokens": 20,
+            "output_tokens": 488,
+            "total_tokens": 508
+          },
+          "cost": {
+            "input_cost": 0.000035000000000000004,
+            "output_cost": 0.0068319999999999995,
+            "total_cost": 0.006867
+          }
+        },
+        {
+          "turn_number": 3,
+          "role": "user",
+          "content": "Are these methods optimized for batch operations?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 4,
+          "role": "assistant",
+          "content": "I don't have information about any batch-optimized discount/percentage methods in my knowledge base.\n\nI specialize in answering questions about the C# mathematics library, which currently includes:\n\nBasicArithmetic: Addition, subtraction, multiplication, division\nAlgebraBasics: Linear equations, quadratic equations\nGeometryShapes: Area and perimeter calculations\nNumberTheory: Prime numbers, GCD, LCM\nFractionOperations: Fraction arithmetic\nPercentageCalculations: Percentage operations\nRatiosAndProportions: Ratio calculations\nExponentsAndPowers: Power and root calculations\nIntegersAndDecimals: Number operations\nStatisticsAndData: Mean, median, mode calculations\n\nIf you want, tell me which batch shape you need (e.g., double[] prices + one discountPercent, or per-item discountPercents), and I can confirm whether anything like that exists elsewhere in the codebase or whether you’d need to loop and call PercentageCalculations.CalculateDiscountedPrice per item.",
+          "performance": {
+            "ttft": 1806.008600000292,
+            "ttlt": 4247.966400000267,
+            "e2e_latency": 4255.00530000031,
+            "tokens_per_second": 44.96269085367248
+          },
+          "token_usage": {
+            "input_tokens": 520,
+            "output_tokens": 242,
+            "total_tokens": 762
+          },
+          "cost": {
+            "input_cost": 0.0009099999999999999,
+            "output_cost": 0.003388,
+            "total_cost": 0.004298
+          }
+        },
+        {
+          "turn_number": 5,
+          "role": "user",
+          "content": "What would be the best approach to process a large list?",
+          "token_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "cost": {
+            "input_cost": 0,
+            "output_cost": 0,
+            "total_cost": 0
+          }
+        },
+        {
+          "turn_number": 6,
+          "role": "assistant",
+          "content": "The best approach with this codebase is to do a simple single-pass loop over your items and call PercentageCalculations.CalculateDiscountedPrice (or ApplyPercentageDecrease) per item. There’s no batch API in the library, and these methods are already O(1) arithmetic, so “batch optimization” mostly means minimizing overhead around the calls.\n\nRelevant library methods (PercentageCalculations.cs, class PercentageCalculations):\n\n1) PercentageCalculations.CalculateDiscountedPrice calls ApplyPercentageDecrease\n\npublic static double CalculateDiscountedPrice(double originalPrice, double discountPercentage)\n{\n    return ApplyPercentageDecrease(originalPrice, discountPercentage);\n}\n\n2) PercentageCalculations.ApplyPercentageDecrease does a subtraction plus PercentageOf\n\npublic static double ApplyPercentageDecrease(double value, double percentage)\n{\n    return value - PercentageOf(percentage, value);\n}\n\n3) PercentageCalculations.PercentageOf is basic arithmetic\n\npublic static double PercentageOf(double percentage, double number)\n{\n    return (percentage / 100) * number;\n}\n\nPractical guidance for processing a large list\n1) Use a tight for loop over an indexable collection (array or List<T>) to avoid iterator overhead.\n2) Write results into a preallocated output array/list to avoid repeated resizing.\n3) If the discount percentage is the same for all items, precompute discountFactor = discountPercentage / 100 once, and compute price - (discountFactor * price) inside the loop. This is mathematically identical to ApplyPercentageDecrease/PercentageOf, but avoids re-dividing by 100 per item. (The library itself doesn’t expose this as a batch method; you’d do this in your calling code.)\n4) If you have per-item discount percentages, just call CalculateDiscountedPrice per item; the division cost is usually negligible compared to surrounding business logic and data access.\n\nIf you describe your input shape (same discount for all items vs per-item discounts, and whether you need a new list of discounted prices or you’re mutating existing items), I can suggest the cleanest loop structure that fits your scenario while staying consistent with how PercentageCalculations is implemented.",
+          "performance": {
+            "ttft": 3342.4840000001714,
+            "ttlt": 10132.209099999629,
+            "e2e_latency": 10139.808199999854,
+            "tokens_per_second": 42.0441382324034
+          },
+          "token_usage": {
+            "input_tokens": 776,
+            "output_tokens": 549,
+            "total_tokens": 1325
+          },
+          "cost": {
+            "input_cost": 0.001358,
+            "output_cost": 0.007686,
+            "total_cost": 0.009044
+          }
+        }
+      ],
+      "qualityScores": {
+        "relevance": 3,
+        "accuracy": 3,
+        "completeness": 3,
+        "clarity": 3
+      },
+      "qualityReasoning": "All responses directly address the user’s performance/batch-processing questions, staying focused on the shown PercentageCalculations methods. The performance claims (O(1) per call, O(N) overall, simple arithmetic, no allocations/IO) match the provided code. The assistant also appropriately notes the lack of a batch API and gives practical, correct optimization strategies (tight loop, preallocation, precompute discount factor) plus a relevant caution about using double for currency. Explanations are structured, easy to follow, and cover the expected outcomes (efficiency, batch approach, optimization guidance).",
+      "satisfactionScore": {
+        "liked": true,
+        "reasoning": "The assistant directly addressed performance (O(N) overall, O(1) per item), explained why thousands of items are fine, and gave practical optimization tips (tight loop, preallocation, precomputing the discount factor). It also flagged an important real-world concern about using double for money. The guidance was clear and actionable even without a batch API."
+      },
+      "totalPerformance": {
+        "avg_ttft": 2655.9768666668483,
+        "avg_ttlt": 7917.081333333316,
+        "avg_e2e_latency": 7925.146100000168,
+        "total_duration": 23775.438300000504
+      },
+      "totalTokenUsage": {
+        "input_tokens": 1316,
+        "output_tokens": 1279,
+        "total_tokens": 2595
+      },
+      "totalCost": {
+        "input_cost": 0.002303,
+        "output_cost": 0.017906,
+        "total_cost": 0.020208999999999998
+      },
+      "qualityPassed": true,
+      "satisfactionPassed": true,
+      "overallPassed": true,
+      "answerModel": "gpt-5.2",
+      "judgeModel": "gpt-5.2"
+    }
+  ],
+  "aggregatedMetrics": {
+    "avgQualityScores": {
+      "relevance": 2.5,
+      "accuracy": 1.9166666666666667,
+      "completeness": 1.9166666666666667,
+      "clarity": 2.5
+    },
+    "likeRate": 0.5,
+    "avgPerformance": {
+      "avg_ttft": 6182.121413888901,
+      "avg_ttlt": 9718.260245138876,
+      "avg_e2e_latency": 10065.917444444358
+    },
+    "totalTokenUsage": {
+      "input_tokens": 16348,
+      "output_tokens": 11523,
+      "total_tokens": 27871
+    },
+    "totalCost": {
+      "input_cost": 0.028609000000000002,
+      "output_cost": 0.16132200000000002,
+      "total_cost": 0.18993100000000002
+    },
+    "passRate": 0.5,
+    "byDifficulty": {
+      "easy": {
+        "avgQuality": 1.5,
+        "likeRate": 0.3333333333333333,
+        "passRate": 0.3333333333333333
+      },
+      "medium": {
+        "avgQuality": 2.4375,
+        "likeRate": 0.75,
+        "passRate": 0.75
+      },
+      "hard": {
+        "avgQuality": 2.45,
+        "likeRate": 0.4,
+        "passRate": 0.4
+      }
+    }
+  },
+  "totalTests": 12,
+  "passedTests": 6,
+  "failedTests": 6,
+  "timestamp": "2026-02-21T15:23:31.335Z",
+  "config": {
+    "answerModel": "gpt-5.2",
+    "judgeModel": "gpt-5.2",
+    "qualityThreshold": 2,
+    "satisfactionType": "like"
+  }
+}

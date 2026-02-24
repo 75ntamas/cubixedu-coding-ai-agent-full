@@ -164,17 +164,27 @@ export async function POST(req: NextRequest) {
               // Execute tool
               let toolResult = '';
               if (functionName === 'search_code_knowledge') {
-                const args = JSON.parse(functionArgs);
-                // calling the tool (database search)
-                toolResult = await searchCodeKnowledge(args.query);
-                
-                // Send tool execution notification to the client
-                // it no needed for a real user experience, but it's good to have it for debugging
-                const toolData = `data: ${JSON.stringify({ 
-                  tool: functionName, 
-                  query: args.query 
-                })}\n\n`;
-                controller.enqueue(encoder.encode(toolData));
+                try {
+                  // Trim whitespace and parse the function arguments
+                  const args = JSON.parse(functionArgs.trim());
+                  // calling the tool (database search)
+                  toolResult = await searchCodeKnowledge(args.query);
+                  
+                  // Send tool execution notification to the client
+                  // it no needed for a real user experience, but it's good to have it for debugging
+                  const toolData = `data: ${JSON.stringify({
+                    tool: functionName,
+                    query: args.query
+                  })}\n\n`;
+                  controller.enqueue(encoder.encode(toolData));
+                } catch (parseError: any) {
+                  console.error('Failed to parse function arguments:', functionArgs);
+                  console.error('Parse error:', parseError);
+                  toolResult = JSON.stringify({
+                    error: 'Invalid tool arguments',
+                    details: parseError.message
+                  });
+                }
               }
 
               // Create new messages with system prompt and tool result
