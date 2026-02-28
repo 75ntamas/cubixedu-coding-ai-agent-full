@@ -104,8 +104,11 @@ def extract_chunks(filepath: str) -> Tuple[str, str, List[Dict]]:
                         # Extract method name from signature
                         # Get first few lines of method signature
                         method_signature = ' '.join([l.strip() for l in method_lines[:3]])
+                        # First, remove tuple return types like (double, double) to avoid matching 'static'
+                        # This removes patterns like: static (type1, type2) before the method name
+                        cleaned_signature = re.sub(r'\([^)]*\)\s+(?=\w+\s*\()', '', method_signature)
                         # Find the identifier immediately before the opening parenthesis
-                        method_name_match = re.search(r'\b(\w+)\s*\(', method_signature)
+                        method_name_match = re.search(r'\b(\w+)\s*\(', cleaned_signature)
                         method_name = method_name_match.group(1) if method_name_match else "UnknownMethod"
                         
                         # Create a chunk with XML doc + method
